@@ -639,7 +639,7 @@ should be displayed using which formats before customizing this function*/
     saveData:function() {
             $.ajax({
                    type: 'post',
-                   url: '',
+                   url: 'https://script.google.com/macros/s/AKfycbxip3-8Cvpa63Y9HU4FOAfdE1Op2nKkWXgsE958lslUJ1Jio2M/exec',
                    data: localStore,
                    processData: false,
                    crossDomain: true,
