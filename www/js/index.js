@@ -467,108 +467,110 @@ should be displayed using which formats before customizing this function*/
         //uncomment up to "localStore[uniqueRecord] = response;" to test whether app is recording and sending data correctly (Stage 2 of Customization)
         //This tells ExperienceSampler how to save data from the various formats
         //Record date (create new date object)
-        //     var datestamp = new Date();
-        //     var year = datestamp.getFullYear(), month = datestamp.getMonth(), day=datestamp.getDate(), hours=datestamp.getHours(), minutes=datestamp.getMinutes(), seconds=datestamp.getSeconds(), milliseconds=datestamp.getMilliseconds();
-        //     //Record value of text field
-        //     var response, currentQuestion, uniqueRecord;
-        //     if (type == 'text') {
-        //         response = button.val();
-        //         // remove newlines from user input
-        //         response = response.replace(/(\r\n|\n|\r)/g, ""); //encodeURIComponent(); decodeURIComponent()
-        //         currentQuestion = button.attr('id').slice(0,-1);
-        //     }
-        //     else if (type == 'number') {
-        //         response = button.val();
-        //         // remove newlines from user input
-        //         response = response.replace(/(\r\n|\n|\r)/g, ""); //encodeURIComponent(); decodeURIComponent()
-        //         currentQuestion = button.attr('id').slice(0,-1);
-        //     }        	
-        //     else if (type == 'slider') {
-        //     	response = button.split(/,(.+)/)[1];
-        //         currentQuestion = button.split(",",1);
-        //     }
-        //     //Record the array
-        //     else if (type == 'checklist') {
-        //         response = button.split(/,(.+)/)[1];
-        //         currentQuestion = button.split(",",1);
-        //     }
-        //     else if (type == 'instructions') {
-        //     	response = button.split(/,(.+)/)[1];
-        //         currentQuestion = button.split(",",1);
-        //     }
-        //     //Record value of clicked button
-        //     else if (type == 'mult1') {
-        //         response = button.value;
-        //         //Create a unique identifier for this response
-        //         currentQuestion = button.id.slice(0,-1);
-        //     }
-        //     //Record value of clicked button
-        //     else if (type == 'mult2') {
-        //         response = button.value;
-        //         //Create a unique identifier for this response
-        //         currentQuestion = button.id.slice(0,-1);
-        //     }
-        //     else if (type == 'datePicker') {
-        // 		response = button.split(/,(.+)/)[1];
-        //      	currentQuestion = button.split(",",1);
-        //     }
-        //     else if (type == 'dateAndTimePicker') {
-        // 		response = button.split(/,(.+)/)[1];
-        //      	currentQuestion = button.split(",",1);
-        //     }
-        //     else if (type == 'timePicker') {
-        //     	response = button.val();
-        //         currentQuestion = button.attr('id').slice(0,-1);
-        //     }
-        //     if (count <= -1) {uniqueRecord = currentQuestion}
-        //     else {uniqueRecord = uniqueKey + "_" + currentQuestion + "_" + year + "_" + month + "_" + day + "_" + hours + "_" + minutes + "_" + seconds + "_" + milliseconds;}
-        //     //Save this to local storage
-        //     localStore[uniqueRecord] = response;
-        //		
+            var datestamp = new Date();
+            var year = datestamp.getFullYear(), month = datestamp.getMonth(), day=datestamp.getDate(), hours=datestamp.getHours(), minutes=datestamp.getMinutes(), seconds=datestamp.getSeconds(), milliseconds=datestamp.getMilliseconds();
+            //Record value of text field
+            var response, currentQuestion, uniqueRecord;
+            if (type == 'text') {
+                response = button.val();
+                // remove newlines from user input
+                response = response.replace(/(\r\n|\n|\r)/g, ""); //encodeURIComponent(); decodeURIComponent()
+                currentQuestion = button.attr('id').slice(0,-1);
+            }
+            else if (type == 'number') {
+                response = button.val();
+                // remove newlines from user input
+                response = response.replace(/(\r\n|\n|\r)/g, ""); //encodeURIComponent(); decodeURIComponent()
+                currentQuestion = button.attr('id').slice(0,-1);
+            }        	
+            else if (type == 'slider') {
+            	response = button.split(/,(.+)/)[1];
+                currentQuestion = button.split(",",1);
+            }
+            //Record the array
+            else if (type == 'checklist') {
+                response = button.split(/,(.+)/)[1];
+                currentQuestion = button.split(",",1);
+            }
+            else if (type == 'instructions') {
+            	response = button.split(/,(.+)/)[1];
+                currentQuestion = button.split(",",1);
+            }
+            //Record value of clicked button
+            else if (type == 'mult1') {
+                response = button.value;
+                //Create a unique identifier for this response
+                currentQuestion = button.id.slice(0,-1);
+            }
+            //Record value of clicked button
+            else if (type == 'mult2') {
+                response = button.value;
+                //Create a unique identifier for this response
+                currentQuestion = button.id.slice(0,-1);
+            }
+            else if (type == 'datePicker') {
+        		response = button.split(/,(.+)/)[1];
+             	currentQuestion = button.split(",",1);
+            }
+            else if (type == 'dateAndTimePicker') {
+        		response = button.split(/,(.+)/)[1];
+             	currentQuestion = button.split(",",1);
+            }
+            else if (type == 'timePicker') {
+            	response = button.val();
+                currentQuestion = button.attr('id').slice(0,-1);
+            }
+            if (count <= -1) {uniqueRecord = currentQuestion}
+            else {uniqueRecord = uniqueKey + "_" + currentQuestion + "_" + year + "_" + month + "_" + day + "_" + hours + "_" + minutes + "_" + seconds + "_" + milliseconds;}
+            //Save this to local storage
+            localStore[uniqueRecord] = response;
+        		
 
 
         //		/*Question Logic Statements*/
         //Stage 3 of Customization
-        // 		//if your questionnaire has two branches based on the absence or presence of a phenomenon, you will need the next statement
-        // 		//this statement allows you to record whether the phenomenon was absent or present so you can specify which branch the participant should complete when
-        // 		//the questionnaire splits into the two branches
-        // 		//if not then you do not need the next statement and should leave it commented out
-        //     if (count == 0) {phenomenonPresence = response;}
-        //		//if you have piped text, you would assign your response variable here
-        //		//where X is the question index number of the question you ask for response you would like to pipe
-        //		//In this example, we just use name to consist with our earlier variables
-        //		if (count ==X) {name = response;}
-        //		//The line below states that if the app is on the last question of participant setup, it should schedule all the notifications
-        //		//then display the default end of survey message, and then record which notifications have been scheduled.
-        //		//You will test local notifications in Stage 4 of customizing the app
-        //		********IF YOU HAVE NO QUESTION LOGIC BUT HAVE SCHEDULED NOTIFICATIONS, YOU NEED TO UNCOMMENT THE FOLLOWING LINE
-        //		TO EXECUTE THE scheduleNotifs() FUNCTION********	
-        //     if (count == -1){app.scheduleNotifs();app.renderLastPage(lastPage[0], count);app.scheduledNotifs();}
-        //     //Identify the next question to populate the view
-        //		//the next statement is about the snooze function
-        // 		//This statement says that if the participant says they are currently unable to complete the questionnaire now,
-        // 		//the app will display the snooze end of survey message. You can customize the snooze function in Stage 4 of Customization 
-        //     else if (count == SNOOZEQ && response == 0) {app.renderLastPage(lastPage[1], count);}
-        // 		//The statement below tells the survey under what conditions should participants be shown one branch of the questionnaire as opposed to the other
-        // 		//Remember each question logic requires at least two lines of code
-        // 		//Replace X with the question number where the questionnaire splits into two branches
-        // 		//Replace Y with the response associated with the presence of the phenomenon and A with the number of the question participants should be presented with
-        // 		//Replace Z with the response associated with the absence of the phenomenon and B with the number of the question participants should be presented with
-        //		//The code that preceded the app.renderQuestion function is just telling ExperienceSampler that the previous question should fade out
-        //		//You can choose not implement this feature; however, we have made the question fade in feature a default function of ExperienceSampler (another shout-out to 
-        //		//to Rebecca Grunberg for the great idea), and it looks more aesthetically pleasing if the fade in is accompanied by a fade out
-        //     else if (count == X & response < 10 && phenomenonPresence == Y) {$("#question").fadeOut(400, function () {$("#question").html("");app.renderQuestion(A);});}
-        //     else if (count == X & response < 10 && phenomenonPresence == Z) {$("#question").fadeOut(400, function () {$("#question").html("");app.renderQuestion(B);});}
-        // 		//The next two statements illustrate the structure that all other question logic statements will follow
-        // 		//They are similar to the ones regarding the absence and presence of the phenomenon, except this time the critical condition is the response chosen
-        // 		//The first statement says if the question number is X and the response is less than Y, display question number Z
-        //		//In that statement, replace X with the question number where the question logic occurs, Y with the specific response value that will trigger the question logic, 
-        // 		//and Z with the question number that should be displayed if response Y is chosen
-        // 		//The second statement, says if the question number is X and the response is not equal to Y, display question number A
-        //		//Remember that to do question logic for one question, you need to have AT LEAST two conditional statements about what to do if the trigger response is chosen, AND
-        // 		//what to do if the trigger response is NOT chosen. 
-        //     else if (count == X && response == Y) {$("#question").fadeOut(400, function () {$("#question").html("");app.renderQuestion(Z);});}
-        //     else if (count == X && response !== Y) {$("#question").fadeOut(400, function () {$("#question").html("");app.renderQuestion(A);});}
+        		//if your questionnaire has two branches based on the absence or presence of a phenomenon, you will need the next statement
+        		//this statement allows you to record whether the phenomenon was absent or present so you can specify which branch the participant should complete when
+        		//the questionnaire splits into the two branches
+        		//if not then you do not need the next statement and should leave it commented out
+            //if (count == 0) {phenomenonPresence = response;}
+        		//if you have piped text, you would assign your response variable here
+        		//where X is the question index number of the question you ask for response you would like to pipe
+        		//In this example, we just use name to consist with our earlier variables
+                //if (count ==0) {name = response;
+                
+                //console.log(name);}
+        		//The line below states that if the app is on the last question of participant setup, it should schedule all the notifications
+        		//then display the default end of survey message, and then record which notifications have been scheduled.
+        		//You will test local notifications in Stage 4 of customizing the app
+        		// ********IF YOU HAVE NO QUESTION LOGIC BUT HAVE SCHEDULED NOTIFICATIONS, YOU NEED TO UNCOMMENT THE FOLLOWING LINE
+        		// TO EXECUTE THE scheduleNotifs() FUNCTION********	
+            if (count == -1){app.scheduleNotifs();app.renderLastPage(lastPage[0], count);app.scheduledNotifs();}
+            //Identify the next question to populate the view
+        		//the next statement is about the snooze function
+        		//This statement says that if the participant says they are currently unable to complete the questionnaire now,
+        		//the app will display the snooze end of survey message. You can customize the snooze function in Stage 4 of Customization 
+            else if (count == SNOOZEQ && response == 2) {app.renderLastPage(lastPage[1], count);}
+        		//The statement below tells the survey under what conditions should participants be shown one branch of the questionnaire as opposed to the other
+        		//Remember each question logic requires at least two lines of code
+        		//Replace X with the question number where the questionnaire splits into two branches
+        		//Replace Y with the response associated with the presence of the phenomenon and A with the number of the question participants should be presented with
+        		//Replace Z with the response associated with the absence of the phenomenon and B with the number of the question participants should be presented with
+        		//The code that preceded the app.renderQuestion function is just telling ExperienceSampler that the previous question should fade out
+        		//You can choose not implement this feature; however, we have made the question fade in feature a default function of ExperienceSampler (another shout-out to 
+        		//to Rebecca Grunberg for the great idea), and it looks more aesthetically pleasing if the fade in is accompanied by a fade out
+            // else if (count == 0 & response < 10 && phenomenonPresence == 0) {$("#question").fadeOut(400, function () {$("#question").html("");app.renderQuestion(2);});}
+            // else if (count == 0 & response < 10 && phenomenonPresence == 1) {$("#question").fadeOut(400, function () {$("#question").html("");app.renderQuestion(1);});}
+        		//The next two statements illustrate the structure that all other question logic statements will follow
+        		//They are similar to the ones regarding the absence and presence of the phenomenon, except this time the critical condition is the response chosen
+        		//The first statement says if the question number is X and the response is less than Y, display question number Z
+        		//In that statement, replace X with the question number where the question logic occurs, Y with the specific response value that will trigger the question logic, 
+        		//and Z with the question number that should be displayed if response Y is chosen
+        		//The second statement, says if the question number is X and the response is not equal to Y, display question number A
+        		//Remember that to do question logic for one question, you need to have AT LEAST two conditional statements about what to do if the trigger response is chosen, AND
+        		//what to do if the trigger response is NOT chosen. 
+            else if (count == 0 && response == 0) {$("#question").fadeOut(400, function () {$("#question").html("");app.renderLastPage(lastPage[0], count);});}
+            else if (count == 0 && response !== 0) {$("#question").fadeOut(400, function () {$("#question").html("");app.renderQuestion(1);});}
 
 
         // 		//Uncomment the "/*else*/" below only when customizing question logic (Stage 3), so that the app will just proceed to the next question in the JSON database
@@ -630,7 +632,6 @@ should be displayed using which formats before customizing this function*/
                         $("#question button").click(function () {app.saveDataLastPage();});    
         				}
                    });
-                   console.log("hello there");
     },
 
     //uncomment this function to test data saving function (Stage 2 of Customization)
@@ -649,7 +650,6 @@ should be displayed using which formats before customizing this function*/
                    },
                    error: function (request, error) {console.log(error);}
                    });
-                   console.log("hi there");
     },
 
     // Local Notifications Javascript
