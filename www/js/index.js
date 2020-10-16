@@ -19,7 +19,7 @@ SOFTWARE.*/
 
 /* activate localStorage */
 var localStore = window.localStorage;
-
+var id;
 /* surveyQuestion Model (This time, written in "JSON" format to interface more cleanly with Mustache) */
 /* This is used to input the questions you would like to ask in your experience sampling questionnaire*/
 var surveyQuestions = [
@@ -60,78 +60,78 @@ var surveyQuestions = [
             {"label": "label for maximum numerical value of scale or second option for multiple choice question"}
         ],
     },
-    /*3*/
-    /*this is what a "mult1" for a regular rating scale with only positive values (including 0) looks like*/                       
-    {
-        "type":"mult1",
-        "variableName": "rateExperience",
-        "questionPrompt": "How do you feel about social media?",
-        "minResponse": 0,
-        "maxResponse": 6,
-        "labels": [
-            {"label": "label for lowest value of rating scale"},
-            {"label": "label for next lowest value of rating scale"},
-            {"label": "label for next lowest value of rating scale"},
-            {"label": "label for midpoint of scale"},
-            {"label": "label for next highest value of rating scale"},
-            {"label": "label for next highest value of rating scale"},
-            {"label": "label for highest value of rating scale"},
-        ]
-    },
-    /*4*/
-    /*a "checklist" question looks exactly the same as a multiple choice option in terms of what properties
-                       you need to specify. The different in formatting will appear when ExperiencesSampler renders it. */
-    {
-        "type":"checklist",
-        "variableName": "checklist1",
-        "questionPrompt": "What social media platform do you use?",
-        "minResponse": 1,
-        "maxResponse": 2,
+    // /*3*/
+    // /*this is what a "mult1" for a regular rating scale with only positive values (including 0) looks like*/                       
+    // {
+    //     "type":"mult1",
+    //     "variableName": "rateExperience",
+    //     "questionPrompt": "How do you feel about social media?",
+    //     "minResponse": 0,
+    //     "maxResponse": 6,
+    //     "labels": [
+    //         {"label": "label for lowest value of rating scale"},
+    //         {"label": "label for next lowest value of rating scale"},
+    //         {"label": "label for next lowest value of rating scale"},
+    //         {"label": "label for midpoint of scale"},
+    //         {"label": "label for next highest value of rating scale"},
+    //         {"label": "label for next highest value of rating scale"},
+    //         {"label": "label for highest value of rating scale"},
+    //     ]
+    // },
+    // /*4*/
+    // /*a "checklist" question looks exactly the same as a multiple choice option in terms of what properties
+    //                    you need to specify. The different in formatting will appear when ExperiencesSampler renders it. */
+    // {
+    //     "type":"checklist",
+    //     "variableName": "checklist1",
+    //     "questionPrompt": "What social media platform do you use?",
+    //     "minResponse": 1,
+    //     "maxResponse": 2,
 
-        "labels": [
-            {"label": "label for minimum numerical value of scale or first option for checklist question"},
-            {"label": "label for maximum numerical value of scale or second option for checklist question"}
-        ],
-    },
-    /*5*/
-    /*a "slider" item using a sliding rating scale. It only needs your question prompt and the minimum and
-                       maximum values of your sliding scale. ExperienceSampler will set the default value to be the midpoint*/
-    {
-        "type":"slider",
-        "variableName": "slider1",
-        "questionPrompt": "How much do you use social media in a day?",
-        "minResponse": 0,
-        "maxResponse": 100,
-    },
-    /*6*/
-    /*mult2 is a question where the scale values are reversed (i.e., max response value is assigned to the 
-                       first label and the min value is assigned to the last label). This question format is useful
-                       if you have a scale that ranges from a negative value to a positive value. Existing research (e.g., Schwarz & Keus, 2004)
-                       suggests mental numbers with both positive numbers and negative numbers have positive numbers on top 
-                       and negative numbers towards the bottom */
-    {
-        "type":"mult2",
-        "variableName": "feeling",
-        "questionPrompt": "How did you feel when you last used social media?",
-        "minResponse": -3,
-        "maxResponse": 3,
-        "labels": [
-            {"label": "label for highest scale point"},
-            {"label": "label for next largest scale point"},
-            {"label": "label for next largest scale point"},
-            {"label": "label for midpoint of scale point"},
-            {"label": "label for next scale point"},
-            {"label": "label for next smallest scale point"},
-            {"label": "label for smallest scale point"},
-        ]
-    },
-    /*7*/
-    /*a "text" question is an open-ended question in which participants can enter values*/
-    {
-        "type":"text",
-        "variableName": "socialMediaUse",
-        "questionPrompt": "Describe what you did on social media the last time you used it:",
-    },
+    //     "labels": [
+    //         {"label": "label for minimum numerical value of scale or first option for checklist question"},
+    //         {"label": "label for maximum numerical value of scale or second option for checklist question"}
+    //     ],
+    // },
+    // /*5*/
+    // /*a "slider" item using a sliding rating scale. It only needs your question prompt and the minimum and
+    //                    maximum values of your sliding scale. ExperienceSampler will set the default value to be the midpoint*/
+    // {
+    //     "type":"slider",
+    //     "variableName": "slider1",
+    //     "questionPrompt": "How much do you use social media in a day?",
+    //     "minResponse": 0,
+    //     "maxResponse": 100,
+    // },
+    // /*6*/
+    // /*mult2 is a question where the scale values are reversed (i.e., max response value is assigned to the 
+    //                    first label and the min value is assigned to the last label). This question format is useful
+    //                    if you have a scale that ranges from a negative value to a positive value. Existing research (e.g., Schwarz & Keus, 2004)
+    //                    suggests mental numbers with both positive numbers and negative numbers have positive numbers on top 
+    //                    and negative numbers towards the bottom */
+    // {
+    //     "type":"mult2",
+    //     "variableName": "feeling",
+    //     "questionPrompt": "How did you feel when you last used social media?",
+    //     "minResponse": -3,
+    //     "maxResponse": 3,
+    //     "labels": [
+    //         {"label": "label for highest scale point"},
+    //         {"label": "label for next largest scale point"},
+    //         {"label": "label for next largest scale point"},
+    //         {"label": "label for midpoint of scale point"},
+    //         {"label": "label for next scale point"},
+    //         {"label": "label for next smallest scale point"},
+    //         {"label": "label for smallest scale point"},
+    //     ]
+    // },
+    // /*7*/
+    // /*a "text" question is an open-ended question in which participants can enter values*/
+    // {
+    //     "type":"text",
+    //     "variableName": "socialMediaUse",
+    //     "questionPrompt": "Describe what you did on social media the last time you used it:",
+    // },
     /*8*/
     /* a "link" question allows participants to access a survey through an onine survey platform*/
     {
@@ -160,27 +160,27 @@ var participantSetup = [
         "type":"text",
         "variableName": "participant_id",
         "questionPrompt": "Please enter your participant ID:"
-    },
-    {
-        "type":"timePicker",
-        "variableName": "weekdayWakeTime",
-        "questionPrompt": "What time do you normally wake up on weekdays?"
-    },
-    {
-        "type":"timePicker",
-        "variableName": "weekdaySleepTime",
-        "questionPrompt": "What time do you normally sleep on weekdays?"
-    },                        
-    {
-        "type":"timePicker",
-        "variableName": "weekendWakeTime",
-        "questionPrompt": "What time do you normally wake up on weekends?"
-    },
-    {
-        "type":"timePicker",
-        "variableName": "weekendSleepTime",
-        "questionPrompt": "What time do you normally eat go to sleep on weekends?"
-    }              
+    }//,
+    // {
+    //     "type":"timePicker",
+    //     "variableName": "weekdayWakeTime",
+    //     "questionPrompt": "What time do you normally wake up on weekdays?"
+    // },
+    // {
+    //     "type":"timePicker",
+    //     "variableName": "weekdaySleepTime",
+    //     "questionPrompt": "What time do you normally sleep on weekdays?"
+    // },                        
+    // {
+    //     "type":"timePicker",
+    //     "variableName": "weekendWakeTime",
+    //     "questionPrompt": "What time do you normally wake up on weekends?"
+    // },
+    // {
+    //     "type":"timePicker",
+    //     "variableName": "weekendSleepTime",
+    //     "questionPrompt": "What time do you normally eat go to sleep on weekends?"
+    // }              
 ];
 
 /*Populate the view with data from surveyQuestion model*/
@@ -610,19 +610,22 @@ should be displayed using which formats before customizing this function*/
 
     //uncomment this function to test data saving function (Stage 2 of Customization)
     saveDataLastPage:function() {
+        const storage = JSON.stringify(localStore);
+        const storage_save = JSON.parse(storage);
             $.ajax({
                    type: 'post',
-                   url: 'https://script.google.com/macros/s/AKfycbxip3-8Cvpa63Y9HU4FOAfdE1Op2nKkWXgsE958lslUJ1Jio2M/exec',
-                   data: localStore,
+                   url: 'https://script.google.com/macros/s/AKfycbyQPSuLQdl56cFk0CxANZx9uEFCLIUjUyRTv12IadgJppKTuNA/exec',
+                   data: JSON.stringify({localStore: localStore}),
                    crossDomain: true,
                    processData: false,
                    success: function (result) {
                    var pid = localStore.participant_id, snoozed = localStore.snoozed, uniqueKey = localStore.uniqueKey, pause_time=localStore.pause_time;
                    localStore.clear();
+                   id = pid;
                    localStore.participant_id = pid;
                    localStore.snoozed = snoozed;
-        		localStore.uniqueKey = uniqueKey;
-        		localStore.pause_time=pause_time;
+        		   localStore.uniqueKey = uniqueKey;
+                   localStore.pause_time=pause_time;
                    $("#question").html("<h3>Your responses have been recorded. Thank you for completing this survey.</h3>");
                    },
 
