@@ -74,31 +74,31 @@ var surveyQuestions = [
             {"label": "Positive"},
         ]
     },
-    // /*4*/
-    // /*a "checklist" question looks exactly the same as a multiple choice option in terms of what properties
-    //                    you need to specify. The different in formatting will appear when ExperiencesSampler renders it. */
-    // {
-    //     "type":"checklist",
-    //     "variableName": "checklist1",
-    //     "questionPrompt": "What social media platform do you use?",
-    //     "minResponse": 1,
-    //     "maxResponse": 2,
+    /*4*/
+    /*a "checklist" question looks exactly the same as a multiple choice option in terms of what properties
+                       you need to specify. The different in formatting will appear when ExperiencesSampler renders it. */
+    {
+        "type":"checklist",
+        "variableName": "checklist1",
+        "questionPrompt": "What social media platform do you use?",
+        "minResponse": 1,
+        "maxResponse": 2,
 
-    //     "labels": [
-    //         {"label": "label for minimum numerical value of scale or first option for checklist question"},
-    //         {"label": "label for maximum numerical value of scale or second option for checklist question"}
-    //     ],
-    // },
+        "labels": [
+            {"label": "SM1"},
+            {"label": "SM2"}
+        ],
+    },
     // /*5*/
-    // /*a "slider" item using a sliding rating scale. It only needs your question prompt and the minimum and
-    //                    maximum values of your sliding scale. ExperienceSampler will set the default value to be the midpoint*/
-    // {
-    //     "type":"slider",
-    //     "variableName": "slider1",
-    //     "questionPrompt": "How much do you use social media in a day?",
-    //     "minResponse": 0,
-    //     "maxResponse": 100,
-    // },
+    /*a "slider" item using a sliding rating scale. It only needs your question prompt and the minimum and
+                       maximum values of your sliding scale. ExperienceSampler will set the default value to be the midpoint*/
+    {
+        "type":"slider",
+        "variableName": "slider1",
+        "questionPrompt": "How much do you use NAME in a day?",
+        "minResponse": 0,
+        "maxResponse": 100,
+    },
     // /*6*/
     // /*mult2 is a question where the scale values are reversed (i.e., max response value is assigned to the 
     //                    first label and the min value is assigned to the last label). This question format is useful
@@ -207,7 +207,7 @@ var uniqueKey;
 //If you need to declare any other global variables (i.e., variables to be used in more than one function of ExperienceSampler)
 //you should declare them here. 
 //For example, you might declare your piped text variable or your question branch response variable
-//var name /*sample piped text variable*/
+var name /*sample piped text variable*/
 
 var app = {
     // Application Constructor
@@ -242,9 +242,9 @@ should be displayed using which formats before customizing this function*/
         //Below is an example of how you would look for the NAME placeholder in your surveyQuestion questionPrompts 
         //and replace it with the response value that you assign to the name variable
         //See our example app to see how you can implement this
-        /*if (questionPrompt.indexOf('NAME') >= 0) {
+        if (questionPrompt.indexOf('NAME') >= 0) {
 		questionPrompt = questionPrompt.replace("NAME", function replacer() {return name;});
-      	}*/
+      	}
         question.questionText = Mustache.render(questionTextTmpl, {questionPrompt: questionPrompt});    
         //Now populate the view for this question, depending on what the question type is
         //This part of the function will render different question formats depending on the type specified
@@ -534,8 +534,8 @@ should be displayed using which formats before customizing this function*/
         		//where X is the question index number of the question you ask for response you would like to pipe
         		//In this example, we just use name to consist with our earlier variables
             if (count == 2) {collegeStudent = response; console.log(collegeStudent);}
-                
-                //console.log(name);}
+            //Piped Text
+            if (count == 3) {(response == 1)? name = 'SM1' : name = 'SM2';}
         		//The line below states that if the app is on the last question of participant setup, it should schedule all the notifications
         		//then display the default end of survey message, and then record which notifications have been scheduled.
         		//You will test local notifications in Stage 4 of customizing the app
