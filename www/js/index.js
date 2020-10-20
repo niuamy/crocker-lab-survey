@@ -99,6 +99,18 @@ var surveyQuestions = [
         "minResponse": 0,
         "maxResponse": 100,
     },
+    // test piped text choice wording
+    {
+        "type":"mult1",
+        "variableName": "rateExperience",
+        "questionPrompt": "Select the social media app you use the most.",
+        "minResponse": 0,
+        "maxResponse": 1,
+        "labels": [
+            {"label": "NAME"},
+            {"label": "Other"},
+        ]
+    },
     // /*6*/
     // /*mult2 is a question where the scale values are reversed (i.e., max response value is assigned to the 
     //                    first label and the min value is assigned to the last label). This question format is useful
@@ -258,9 +270,9 @@ should be displayed using which formats before customizing this function*/
                     //If you want to implement piped text in your wording choice, you would place it here
                     //Below is an example of how you would look for the NAME placeholder in your surveyQuestion labels 
                     //and replace it with 
-                    //                 if (label.indexOf('NAME') >= 0){
-                    //             		label = label.replace("NAME", function replacer() {return name;});
-                    //             		}            	
+                                if (label.indexOf('NAME') >= 0){
+                                	label = label.replace("NAME", function replacer() {return name;});
+                                }            	
                     question.buttons += Mustache.render(buttonTmpl, {
                         id: question.variableName+i,
                         value: i,
