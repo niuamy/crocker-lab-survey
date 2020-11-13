@@ -60,54 +60,100 @@ var surveyQuestions = [
             {"label": "Yes"}
         ],
     },
-    // /*3*/
+    /*3*/
     /*this is what a "mult1" for a regular rating scale with only positive values (including 0) looks like*/                       
     {
         "type":"mult1",
-        "variableName": "rateExperience",
-        "questionPrompt": "How do you feel about social media?",
+        "variableName": "year",
+        "questionPrompt": "What year are you?",
         "minResponse": 0,
-        "maxResponse": 2,
+        "maxResponse": 4,
         "labels": [
-            {"label": "Negative"},
-            {"label": "Neutral"},
-            {"label": "Positive"},
+            {"label": "First"},
+            {"label": "Second"},
+            {"label": "Third"},
+            {"label": "Fourth"},
+            {"label": "Fifth+"},
         ]
     },
     /*4*/
+    {
+        "type":"mult1",
+        "variableName": "socialMediaFrequency",
+        "questionPrompt": "Have you used social media within the last day?",
+        "minResponse": 0,
+        "maxResponse": 1,
+        "labels": [
+            {"label": "No"},
+            {"label": "Yes"},
+        ]
+    },
+    /*5*/
     /*a "checklist" question looks exactly the same as a multiple choice option in terms of what properties
                        you need to specify. The different in formatting will appear when ExperiencesSampler renders it. */
     {
         "type":"checklist",
-        "variableName": "checklist1",
-        "questionPrompt": "What social media platform do you use?",
-        "minResponse": 1,
-        "maxResponse": 2,
+        "variableName": "socialMediaUsed",
+        "questionPrompt": "What of these social media platforms do you use?",
+        "minResponse": 0,
+        "maxResponse": 4,
 
         "labels": [
-            {"label": "SM1"},
-            {"label": "SM2"}
+            {"label": "Facebook"},
+            {"label": "Twitter"},
+            {"label": "Instagram"},
+            {"label": "Snapchat"},
+            {"label": "Other"},
         ],
     },
-    // /*5*/
+
+    /*6*/
+    {
+        "type":"mult1",
+        "variableName": "lastSocialMediaUsage",
+        "questionPrompt": "When was the last time you used social media?",
+        "minResponse": 0,
+        "maxResponse": 3,
+        "labels": [
+            {"label": "Within the last week"},
+            {"label": "Within the last two weeks"},
+            {"label": "Within the last month"},
+            {"label": "More than a month ago"},
+        ]
+    },
+
+    /*7*/
+    /*a "text" question is an open-ended question in which participants can enter values*/
+    {
+        "type":"text",
+        "variableName": "mostUsedSocialMedia",
+        "questionPrompt": "Which social media do you use most often?",
+    },
+
+    /*8*/
     /*a "slider" item using a sliding rating scale. It only needs your question prompt and the minimum and
                        maximum values of your sliding scale. ExperienceSampler will set the default value to be the midpoint*/
     {
         "type":"slider",
-        "variableName": "slider1",
-        "questionPrompt": "How much do you use NAME in a day?",
+        "variableName": "userFeeling",
+        "questionPrompt": "How do you feel about SOCIALMEDIA, where 0 is negative and 100 is positive?",
         "minResponse": 0,
         "maxResponse": 100,
     },
+    /*9*/
     // test piped text choice wording
     {
         "type":"mult1",
-        "variableName": "rateExperience",
-        "questionPrompt": "Select the social media app you use the most.",
+        "variableName": "mostPopularSocialMedia",
+        "questionPrompt": "Select the social media app you think is the most popular among your age group.",
         "minResponse": 0,
-        "maxResponse": 1,
+        "maxResponse": 5,
         "labels": [
-            {"label": "NAME"},
+            {"label": "SOCIALMEDIA"},
+            {"label": "Facebook"},
+            {"label": "Twitter"},
+            {"label": "Instagram"},
+            {"label": "Snapchat"},
             {"label": "Other"},
         ]
     },
@@ -142,11 +188,11 @@ var surveyQuestions = [
     // },
     /*8*/
     /* a "link" question allows participants to access a survey through an onine survey platform*/
-    {
-        "type":"link",
-        "variableName": "link1",
-        "questionPrompt": "Please click <a href=â€˜google.comâ€™ target=â€˜_blankâ€™>HERE</a> to open your survey.",
-    },       
+    // {
+    //     "type":"link",
+    //     "variableName": "link1",
+    //     "questionPrompt": "Please click <a href=â€˜google.comâ€™ target=â€˜_blankâ€™>HERE</a> to open your survey.",
+    // },       
     /*input additional questions*/
 ];
 
@@ -168,27 +214,27 @@ var participantSetup = [
         "type":"text",
         "variableName": "participant_id",
         "questionPrompt": "Please enter your participant ID:"
-    }//,
-    // {
-    //     "type":"timePicker",
-    //     "variableName": "weekdayWakeTime",
-    //     "questionPrompt": "What time do you normally wake up on weekdays?"
-    // },
-    // {
-    //     "type":"timePicker",
-    //     "variableName": "weekdaySleepTime",
-    //     "questionPrompt": "What time do you normally sleep on weekdays?"
-    // },                        
-    // {
-    //     "type":"timePicker",
-    //     "variableName": "weekendWakeTime",
-    //     "questionPrompt": "What time do you normally wake up on weekends?"
-    // },
-    // {
-    //     "type":"timePicker",
-    //     "variableName": "weekendSleepTime",
-    //     "questionPrompt": "What time do you normally eat go to sleep on weekends?"
-    // }              
+    },
+    {
+        "type":"timePicker",
+        "variableName": "weekdayWakeTime",
+        "questionPrompt": "What time do you normally wake up on weekdays?"
+    },
+    {
+        "type":"timePicker",
+        "variableName": "weekdaySleepTime",
+        "questionPrompt": "What time do you normally sleep on weekdays?"
+    },                        
+    {
+        "type":"timePicker",
+        "variableName": "weekendWakeTime",
+        "questionPrompt": "What time do you normally wake up on weekends?"
+    },
+    {
+        "type":"timePicker",
+        "variableName": "weekendSleepTime",
+        "questionPrompt": "What time do you normally eat go to sleep on weekends?"
+    }              
 ];
 
 /*Populate the view with data from surveyQuestion model*/
@@ -219,7 +265,7 @@ var uniqueKey;
 //If you need to declare any other global variables (i.e., variables to be used in more than one function of ExperienceSampler)
 //you should declare them here. 
 //For example, you might declare your piped text variable or your question branch response variable
-var name /*sample piped text variable*/
+var socialMedia; /*sample piped text variable*/
 
 var app = {
     // Application Constructor
@@ -249,13 +295,15 @@ should be displayed using which formats before customizing this function*/
         var question;
         if (question_index <= -1) {question = participantSetup[question_index + NUMSETUPQS];}
         else {question = surveyQuestions[question_index];}
+        // console.log("question index: " + question_index);
+        // console.log("question: " + JSON.stringify(question));
         var questionPrompt = question.questionPrompt;
         //If you want to include piped text in your question wording, you would implement it in this section. 
         //Below is an example of how you would look for the NAME placeholder in your surveyQuestion questionPrompts 
         //and replace it with the response value that you assign to the name variable
         //See our example app to see how you can implement this
-        if (questionPrompt.indexOf('NAME') >= 0) {
-		questionPrompt = questionPrompt.replace("NAME", function replacer() {return name;});
+        if (questionPrompt.indexOf('SOCIALMEDIA') >= 0) {
+		questionPrompt = questionPrompt.replace("SOCIALMEDIA", function replacer() {return name;});
       	}
         question.questionText = Mustache.render(questionTextTmpl, {questionPrompt: questionPrompt});    
         //Now populate the view for this question, depending on what the question type is
@@ -270,8 +318,8 @@ should be displayed using which formats before customizing this function*/
                     //If you want to implement piped text in your wording choice, you would place it here
                     //Below is an example of how you would look for the NAME placeholder in your surveyQuestion labels 
                     //and replace it with 
-                                if (label.indexOf('NAME') >= 0){
-                                	label = label.replace("NAME", function replacer() {return name;});
+                                if (label.indexOf('SOCIALMEDIA') >= 0){
+                                	label = label.replace("SOCIALMEDIA", function replacer() {return name;});
                                 }            	
                     question.buttons += Mustache.render(buttonTmpl, {
                         id: question.variableName+i,
@@ -455,6 +503,7 @@ should be displayed using which formats before customizing this function*/
     init: function() {
         //First, we assign a value to the unique key when we initialize ExperienceSampler
         uniqueKey = new Date().getTime();
+        console.log(uniqueKey);
         //The statement below states that if there is no participant id or if the participant id is left blank,
         //ExperienceSampler would present the participant set up questions
         if (localStore.participant_id === " " || !localStore.participant_id || localStore.participant_id == "undefined") {app.renderQuestion(-NUMSETUPQS);}  
@@ -541,19 +590,18 @@ should be displayed using which formats before customizing this function*/
         		//this statement allows you to record whether the phenomenon was absent or present so you can specify which branch the participant should complete when
         		//the questionnaire splits into the two branches
         		//if not then you do not need the next statement and should leave it commented out
-            if (count == 1) {phenomenonPresence = response;}
         		//if you have piped text, you would assign your response variable here
         		//where X is the question index number of the question you ask for response you would like to pipe
         		//In this example, we just use name to consist with our earlier variables
-            if (count == 2) {collegeStudent = response; console.log(collegeStudent);}
+            // if (count != 7) {phenomenonPresence = response;}
             //Piped Text
-            if (count == 3) {(response == 1)? name = 'SM1' : name = 'SM2';}
+            if (count == 7) {name = response;}
         		//The line below states that if the app is on the last question of participant setup, it should schedule all the notifications
         		//then display the default end of survey message, and then record which notifications have been scheduled.
         		//You will test local notifications in Stage 4 of customizing the app
         		// ********IF YOU HAVE NO QUESTION LOGIC BUT HAVE SCHEDULED NOTIFICATIONS, YOU NEED TO UNCOMMENT THE FOLLOWING LINE
         		// TO EXECUTE THE scheduleNotifs() FUNCTION********	
-            if (count == -1){app.scheduleNotifs();app.renderLastPage(lastPage[0], count);app.scheduledNotifs();}
+            if (count == -1){app.scheduleNotifs();app.renderLastPage(lastPage[0], count);app.scheduleNotifs();}
             //Identify the next question to populate the view
         		//the next statement is about the snooze function
         		//This statement says that if the participant says they are currently unable to complete the questionnaire now,
@@ -567,9 +615,31 @@ should be displayed using which formats before customizing this function*/
         		//The code that preceded the app.renderQuestion function is just telling ExperienceSampler that the previous question should fade out
         		//You can choose not implement this feature; however, we have made the question fade in feature a default function of ExperienceSampler (another shout-out to 
         		//to Rebecca Grunberg for the great idea), and it looks more aesthetically pleasing if the fade in is accompanied by a fade out
-            else if (count == 0 & response < 10 && phenomenonPresence == 0) {$("#question").fadeOut(400, function () {$("#question").html("");app.renderLastPage(lastPage[1], count);});}
-            else if (count == 0 & response < 10 && phenomenonPresence == 1) {$("#question").fadeOut(400, function () {$("#question").html("");app.renderQuestion(1);});}
-        		//The next two statements illustrate the structure that all other question logic statements will follow
+                
+            //Q2: Are you a college student? (skip logic)
+                //A1: No
+                else if (count == 2 && response == 0) {$("#question").fadeOut(400, function () {$("#question").html("");app.renderQuestion(4);});}
+                //A2: Yes
+                else if (count == 2 && response == 1) {$("#question").fadeOut(400, function () {$("#question").html("");app.renderQuestion(3);});}
+            //Q3: What year are you?
+                else if (count == 3 && response <= 4) {$("#question").fadeOut(400, function () {$("#question").html("");app.renderQuestion(4);});}
+            //Q4: Have you used social media within the last day? (question branching)
+                //A1: No
+                else if (count == 4 && response == 0) {$("#question").fadeOut(400, function () {$("#question").html("");app.renderQuestion(6);});}
+                //A2: Yes    
+                else if (count == 4 && response == 1) {$("#question").fadeOut(400, function () {$("#question").html("");app.renderQuestion(5);});}
+            //Q5: What social media have you recently used?
+                else if (count == 5 && response <= 4) {$("#question").fadeOut(400, function () {$("#question").html("");app.renderQuestion(7);});}
+            //Q6: When was the last time you used social media?
+                else if (count == 6 && response <= 4) {$("#question").fadeOut(400, function () {$("#question").html("");app.renderQuestion(7);});}
+            //Q7: Which social media do you use most often? (piped text question)
+                else if (count == 7) {$("#question").fadeOut(400, function () {$("#question").html("");app.renderQuestion(8);});}
+            //Q8: How do you feel about <piped text>
+                else if (count == 8) {$("#question").fadeOut(400, function () {$("#question").html("");app.renderQuestion(9);});}
+            //Q9: Which social media do you think is most popular (piped text answer)
+                else if (count == 9) {$("#question").fadeOut(400, function () {$("#question").html("");app.renderLastPage(lastPage[0], count);});}
+                  
+                //The next two statements illustrate the structure that all other question logic statements will follow
         		//They are similar to the ones regarding the absence and presence of the phenomenon, except this time the critical condition is the response chosen
         		//The first statement says if the question number is X and the response is less than Y, display question number Z
         		//In that statement, replace X with the question number where the question logic occurs, Y with the specific response value that will trigger the question logic, 
@@ -578,14 +648,14 @@ should be displayed using which formats before customizing this function*/
         		//Remember that to do question logic for one question, you need to have AT LEAST two conditional statements about what to do if the trigger response is chosen, AND
                 //what to do if the trigger response is NOT chosen. 
             
-            else if (count == 2 && response == 0) {$("#question").fadeOut(400, function () {$("#question").html("");app.renderLastPage(lastPage[0], count);});}
-            else if (count == 2 && response !== 0) {$("#question").fadeOut(400, function () {$("#question").html("");app.renderQuestion(3);});}
+            // else if (count == 2 && response == 0) {$("#question").fadeOut(400, function () {$("#question").html("");app.renderLastPage(lastPage[0], count);});}
+            // else if (count == 2 && response !== 0) {$("#question").fadeOut(400, function () {$("#question").html("");app.renderQuestion(3);});}
 
 
         // 		//Uncomment the "/*else*/" below only when customizing question logic (Stage 3), so that the app will just proceed to the next question in the JSON database
         // 		//DO NOT uncomment the "/*else*/" below when testing whether questions are being displayed in the right format (Stage 1) OR if you have no question logic 
         //in your questionnaire
-        /*else*/ if (count < surveyQuestions.length-1) {$("#question").fadeOut(400, function () {$("#question").html("");app.renderQuestion(count+1);});}
+        else if (count < surveyQuestions.length-1) {$("#question").fadeOut(400, function () {$("#question").html("");app.renderQuestion(count+1);});}
         else {app.renderLastPage(lastPage[0], count);};
     },
 
@@ -668,7 +738,7 @@ should be displayed using which formats before customizing this function*/
     // Stage 5 of Customization
     //This code is for a interval-contingent design where all participants answer the questionnaire at the same time
     //(i.e., not customized to their schedule)
-    scheduleNotifs:function(){
+    //scheduleNotifs:function(){
         //	//Section 1 - Declaring necessary variables
         //	//need an interval variable, 
         //	var interval;
@@ -715,158 +785,155 @@ should be displayed using which formats before customizing this function*/
         // 	//You can also calculate response latencies if you with these values later if you want
         //	localStore['notification_' + a] = localStore.participant_id + "_" + a + "_" + date1; 
         // }
-    },
+   // },
 
     // This code is for signal-contingent designs with varying time intervals between notifications
-    // scheduleNotifs:function() {
-    //		//Section 1 - Declaring necessary variables
-    // 		//Declares the number of intervals between the notifications for each day (i.e., if beeping participants 6 times, declare 6 intervals)
-    //     var interval1, interval2, interval3, interval4, interval5, interval6;
+    scheduleNotifs:function() {
+    		//Section 1 - Declaring necessary variables
+    		//Declares the number of intervals between the notifications for each day (i.e., if beeping participants 6 times, declare 6 intervals)
+            var interval1, interval2, interval3, interval4, interval5, interval6;
 
-    // 		//Declares a variable to represent the id of each notification for the day
-    // 		//Declare as many letters as you have intervals (i.e., 6 intervals, declare 6 ids)
-    //     var a, b, c, d, e, f;
+    		//Declares a variable to represent the id of each notification for the day
+    		//Declare as many letters as you have intervals (i.e., 6 intervals, declare 6 ids)
+            var a, b, c, d, e, f;
 
-    // 		//Declare a variable to represent new date to be calculated for each beep
-    //		//That is, if there are 6 intervals, declare 6 new dates
-    //     var date1, date2, date3, date4, date5, date6;
+    		//Declare a variable to represent new date to be calculated for each beep
+    		//That is, if there are 6 intervals, declare 6 new dates
+            var date1, date2, date3, date4, date5, date6;
 
-    // 		//The statement below declares the start and end time of the daily data collection period
-    // 		//These variables are not necessary if the start and end time of the daily data collection period do not vary across the experience
-    // 		//sampling data collection period
-    //     var currentMaxHour, currentMaxMinute, currentMinHour, currentMinMinute, nextMinHour, nextMinMinute;
+    		//The statement below declares the start and end time of the daily data collection period
+    		//These variables are not necessary if the start and end time of the daily data collection period do not vary across the experience
+    		//sampling data collection period
+            var currentMaxHour, currentMaxMinute, currentMinHour, currentMinMinute, nextMinHour, nextMinMinute;
 
-    // 		//The next three lines create variables for the present time when the notifications are being scheduled
-    //     var dateObject = new Date();
-    //     var now = dateObject.getTime();
-    //     var dayOfWeek = dateObject.getDay(), currentHour = dateObject.getHours(), currentMinute = dateObject.getMinutes();
+    		//The next three lines create variables for the present time when the notifications are being scheduled
+            var dateObject = new Date();
+            var now = dateObject.getTime();
+            var dayOfWeek = dateObject.getDay(), currentHour = dateObject.getHours(), currentMinute = dateObject.getMinutes();
 
-    // 		//The next variables represent the amount of time between the end of the data collection to the start of the next one (nightlyLag), 
-    // 		//the interval between the scheduling time and the start of the first data collection period (currentLag), the maximum amount of time
-    // 		//in the data collection period (maxInterval), and the time between until the end of the next data collection period (in our case 
-    // 		//dinner time; dinnerInterval)
-    //     var currentLag, maxInterval, dinnerInterval;
+    		//The next variables represent the amount of time between the end of the data collection to the start of the next one (nightlyLag), 
+    		//the interval between the scheduling time and the start of the first data collection period (currentLag), the maximum amount of time
+    		//in the data collection period (maxInterval), and the time between until the end of the next data collection period (in our case 
+    		//dinner time; dinnerInterval)
+             var currentLag, maxInterval, dinnerInterval;
 
-    // 		//These represents the participants time values 
-    // 		var weekendDinnerTime = localStore.weekendDinnerTime.split(":");
-    // 		var weekendWakeTime = localStore.weekendWakeTime.split(":");
-    // 		var weekdayDinnerTime = localStore.weekdayDinnerTime.split(":");
-    // 		var weekdayWakeTime = localStore.weekdayWakeTime.split(":");
+    		//These represents the participants time values 
+    		var weekendDinnerTime = localStore.weekendSleepTime.split(":");
+    		var weekendWakeTime = localStore.weekendWakeTime.split(":");
+    		var weekdayDinnerTime = localStore.weekdaySleepTime.split(":");
+    		var weekdayWakeTime = localStore.weekdayWakeTime.split(":");
 
-    // 		//Then you can declare any values that you might use more than once such as the number of milliseconds in a day
-    //    	var day = 86400000;
-    //    	var minDiaryLag = 6300000;
-    //    	var randomDiaryLag = 1800000;
-    //    	var minDiaryLagAfterDinner = 5400000;
+    		//Then you can declare any values that you might use more than once such as the number of milliseconds in a day
+            var day = 86400000;
+            var minDiaryLag = 30000;//30 seconds
+            var randomDiaryLag = 60000;//1 minute
+            var minDiaryLagAfterDinner = 5400000;
 
-    // 		//This is a loop that repeats this block of codes for the number of days there are in the experience sampling period
-    // 		//Replace X with the number of days in the experience sampling period (e.g., collecting data for 7 days, replace X with 7)
-    // 		//Note that iOS apps can only have 64 unique notifications, so you should keep that in mind if you are collecting data 
-    // 		//for more than longer periods of time
-    //     for (i = 0; i < X; i++)
-    //     {
-    // 		//The code below (up to "else { nightlyLag = ...}" is only necessary if you allow the daily data collection period to vary across 
-    // 		//weekdays and weekends
-    //         var alarmDay = dayOfWeek + 1 + i;
-    //         if (alarmDay > 6) {alarmDay = alarmDay-7;}
-    //         //enter time weekendDinnerTime hour and then enter weekendDinnerTime minute
-    //    			if (alarmDay > 6) {alarmDay = alarmDay - 7;}
-    //    			if (alarmDay == 0 || alarmDay == 6) {
-    //    				currentMaxHour = weekendDinnerTime[0];
-    //    				currentMaxMinutes = weekendDinnerTime[1];
-    //    				currentMinHour = weekendWakeTime[0];
-    //    				currentMinMinutes = weekendWakeTime[1];
-    //    				if (alarmDay == 0) {
-    //    					nextMinHour = weekdayWakeTime[0];
-    //    					nextMinMinutes = weekdayWakeTime[1];
-    //    				}
-    //    				else {
-    //    					nextMinHour = weekendWakeTime[0];
-    //    					nextMinMinutes = weekendWakeTime[1];
-    //    				}
-    //    				currentLag = (((((24 - parseInt(currentHour) + parseInt(weekendWakeTime[0]))*60) - parseInt(currentMinute) + parseInt(weekendWakeTime[1]))*60)*1000);
-    // 				
-    //    			}
-    //    			else {
-    //    				currentMaxHour = weekdayDinnerTime[0];
-    //    				currentMaxMinutes = weekdayDinnerTime[1];
-    //    				currentMinHour = weekdayWakeTime[0];
-    //    				currentMinMinutes = weekdayWakeTime[1];   				
-    //    				if (alarmDay == 5) {
-    //    					nextMinHour = weekendWakeTime[0];
-    //    					nextMinMinutes = weekendWakeTime[1];
-    //    				}
-    //    				else {
-    //    					nextMinHour = weekdayWakeTime[0];
-    //    					nextMinMinutes = weekdayWakeTime[1];   				
-    //    				}
-    //                 currentLag = (((((24 - parseInt(currentHour) + parseInt(weekdayWakeTime[0]))*60) - parseInt(currentMinute) + parseInt(weekdayWakeTime[1]))*60)*1000);
-    //    			}
-    //    			if (alarmDay == 5 || alarmDay == 0) {nightlyLag = currentLag;}
-    //    			else {
-    //             	nightlyLag= (((((24 - parseInt(currentHour) + parseInt(nextMinHour))*60) - parseInt(currentMinute) + parseInt(nextMinMinutes))*60)*1000);
-    //    			}
+    		//This is a loop that repeats this block of codes for the number of days there are in the experience sampling period
+    		//Replace X with the number of days in the experience sampling period (e.g., collecting data for 7 days, replace X with 7)
+    		//Note that iOS apps can only have 64 unique notifications, so you should keep that in mind if you are collecting data 
+    		//for more than longer periods of time
+        for (i = 0; i < 1; i++)
+        {
+    		//The code below (up to "else { nightlyLag = ...}" is only necessary if you allow the daily data collection period to vary across 
+    		//weekdays and weekends
+            var alarmDay = dayOfWeek + 1 + i;
+            if (alarmDay > 6) {alarmDay = alarmDay-7;}
+            //enter time weekendDinnerTime hour and then enter weekendDinnerTime minute
+       			if (alarmDay > 6) {alarmDay = alarmDay - 7;}
+       			if (alarmDay == 0 || alarmDay == 6) {
+       				currentMaxHour = weekendDinnerTime[0];
+       				currentMaxMinutes = weekendDinnerTime[1];
+       				currentMinHour = weekendWakeTime[0];
+       				currentMinMinutes = weekendWakeTime[1];
+       				if (alarmDay == 0) {
+       					nextMinHour = weekdayWakeTime[0];
+       					nextMinMinutes = weekdayWakeTime[1];
+       				}
+       				else {
+       					nextMinHour = weekendWakeTime[0];
+       					nextMinMinutes = weekendWakeTime[1];
+       				}
+       				currentLag = (((((24 - parseInt(currentHour) + parseInt(weekendWakeTime[0]))*60) - parseInt(currentMinute) + parseInt(weekendWakeTime[1]))*60)*1000);
+    				
+       			}
+       			else {
+       				currentMaxHour = weekdayDinnerTime[0];
+       				currentMaxMinutes = weekdayDinnerTime[1];
+       				currentMinHour = weekdayWakeTime[0];
+       				currentMinMinutes = weekdayWakeTime[1];   				
+       				if (alarmDay == 5) {
+       					nextMinHour = weekendWakeTime[0];
+       					nextMinMinutes = weekendWakeTime[1];
+       				}
+       				else {
+       					nextMinHour = weekdayWakeTime[0];
+       					nextMinMinutes = weekdayWakeTime[1];   				
+       				}
+                    currentLag = (((((24 - parseInt(currentHour) + parseInt(weekdayWakeTime[0]))*60) - parseInt(currentMinute) + parseInt(weekdayWakeTime[1]))*60)*1000);
+       			}
+       			if (alarmDay == 5 || alarmDay == 0) {nightlyLag = currentLag;}
+       			else {
+                	nightlyLag= (((((24 - parseInt(currentHour) + parseInt(nextMinHour))*60) - parseInt(currentMinute) + parseInt(nextMinMinutes))*60)*1000);
+       			}
 
-    //         //The maxInterval is the number of milliseconds between wakeup time and dinner time
-    //         maxInterval = (((((parseInt(currentMaxHour) - parseInt(currentMinHour))*60) + parseInt(currentMaxMinute) - parseInt(currentMinMinute))*60)*1000);
-    // 			//This part of the code calculates how much time there should be between the questionnaires
-    // 			//Change X to the minimum amount of time that should elapse between beeps in seconds
-    // 			//Change Y to the amount of additional time in seconds that should elapse to reach the maximum amount of time
-    // 			//The part of the code that accompanies Y randomly generates a number that allows for notifications to occur randomly between X and X+Y after the previous beep
-    // 			//That is, X + Y = maximum amount of time that can elapse between beeps
-    // 
-    // 			//If designing an interval-based design, delete "Math.round(Math.random()*Y)+" and replace X with the amount of time in seconds between each beep
-    //    			interval1 = parseInt(currentLag) + (parseInt(Math.round(Math.random()*randomDiaryLag)+minDiaryLag)) + day*i;
-    //    			interval2 = interval1 + (parseInt(Math.round(Math.random()*randomDiaryLag)+minDiaryLag));
-    //    			interval3 = interval2 + (parseInt(Math.round(Math.random()*randomDiaryLag)+minDiaryLag));
-    //    			interval4 = interval3 + (parseInt(Math.round(Math.random()*randomDiaryLag)+minDiaryLag));
-    //    			interval5 = interval4 + (parseInt(Math.round(Math.random()*randomDiaryLag)+minDiaryLag));
-    //         		interval6 = interval5 + (parseInt(Math.round(Math.random()*randomDiaryLag)+minDiaryLag));
+            //The maxInterval is the number of milliseconds between wakeup time and dinner time
+            maxInterval = (((((parseInt(currentMaxHour) - parseInt(currentMinHour))*60) + parseInt(currentMaxMinute) - parseInt(currentMinMinute))*60)*1000);
+    			//This part of the code calculates how much time there should be between the questionnaires
+    			//Change X to the minimum amount of time that should elapse between beeps in seconds
+    			//Change Y to the amount of additional time in seconds that should elapse to reach the maximum amount of time
+    			//The part of the code that accompanies Y randomly generates a number that allows for notifications to occur randomly between X and X+Y after the previous beep
+    			//That is, X + Y = maximum amount of time that can elapse between beeps
+    
+    			//If designing an interval-based design, delete "Math.round(Math.random()*Y)+" and replace X with the amount of time in seconds between each beep
+       			interval1 = parseInt(currentLag) + (parseInt(Math.round(Math.random()*randomDiaryLag)+minDiaryLag)) + day*i;
+       			interval2 = interval1 + (parseInt(Math.round(Math.random()*randomDiaryLag)+minDiaryLag));
+       			interval3 = interval2 + (parseInt(Math.round(Math.random()*randomDiaryLag)+minDiaryLag));
+       			interval4 = interval3 + (parseInt(Math.round(Math.random()*randomDiaryLag)+minDiaryLag));
+       			interval5 = interval4 + (parseInt(Math.round(Math.random()*randomDiaryLag)+minDiaryLag));
+                interval6 = interval5 + (parseInt(Math.round(Math.random()*randomDiaryLag)+minDiaryLag));
+       
+    			//This part of the code calculates a unique ID for each notification     
+                a = 101+(parseInt(i)*100);
+                b = 102+(parseInt(i)*100);
+                c = 103+(parseInt(i)*100);
+                d = 104+(parseInt(i)*100);
+                e = 105+(parseInt(i)*100);
+                f = 106+(parseInt(i)*100);
+    
+    			//This part of the code calculates the time when the notification should be sent by adding the time interval to the current date and time        
+                date1 = new Date(now + interval1);
+                date2 = new Date(now + interval2);
+                date3 = new Date(now + interval3);
+                date4 = new Date(now + interval4);
+                date5 = new Date(now + interval5);
+                date6 = new Date(now + interval6);
+            
+    			//This part of the code schedules the notifications
+            	cordova.plugins.notification.local.schedule([
+            		{icon: 'ic_launcher', id: a, title: 'Diary Surveys', text: 'Time for your next Diary Survey!', at: date1,}, 
+            		{icon: 'ic_launcher', id: b, title: 'Diary Surveys', text: 'Time for your next Diary Survey!', at: date2,},
+            		{icon: 'ic_launcher', id: c, title: 'Diary Surveys', text: 'Time for your next Diary Survey!', at: date3,},
+            		{icon: 'ic_launcher', id: d, title: 'Diary Surveys', text: 'Time for your next Diary Survey!', at: date4,},
+            		{icon: 'ic_launcher', id: e, title: 'Diary Surveys', text: 'Time for your next Diary Survey!', at: date5,},
+            		{icon: 'ic_launcher', id: f, title: 'Diary Surveys', text: 'Time for your next Diary Survey!', at: date6,}]);
 
-    //    
-    // 			//This part of the code calculates a unique ID for each notification     
-    //         a = 101+(parseInt(i)*100);
-    //         b = 102+(parseInt(i)*100);
-    //         c = 103+(parseInt(i)*100);
-    //         d = 104+(parseInt(i)*100);
-    //         e = 105+(parseInt(i)*100);
-    //         f = 106+(parseInt(i)*100);
-
-    //
-    // 			//This part of the code calculates the time when the notification should be sent by adding the time interval to the current date and time        
-    //         date1 = new Date(now + interval1);
-    //         date2 = new Date(now + interval2);
-    //         date3 = new Date(now + interval3);
-    //         date4 = new Date(now + interval4);
-    //         date5 = new Date(now + interval5);
-    //         date6 = new Date(now + interval6);
-
-    //         
-    // 			//This part of the code schedules the notifications
-    //         	cordova.plugins.notification.local.schedule([
-    //         		{icon: 'ic_launcher', id: a, at: date1, text: 'Time for your next Diary Survey!', title: 'Diary Surveys'}, 
-    //         		{icon: 'ic_launcher', id: b, at: date2, text: 'Time for your next Diary Survey!', title: 'Diary Surveys'},
-    //         		{icon: 'ic_launcher', id: c, at: date3, text: 'Time for your next Diary Survey!', title: 'Diary Surveys'},
-    //         		{icon: 'ic_launcher', id: d, at: date4, text: 'Time for your next Diary Survey!', title: 'Diary Surveys'},
-    //         		{icon: 'ic_launcher', id: e, at: date5, text: 'Time for your next Diary Survey!', title: 'Diary Surveys'},
-    //         		{icon: 'ic_launcher', id: f, at: date6, text: 'Time for your next Diary Survey!', title: 'Diary Surveys'}]);
-
-    // 			//This part of the code records when the notifications are scheduled for and sends it to the server
-    //         	localStore['notification_' + i + '_1'] = localStore.participant_id + "_" + a + "_" + date1;
-    //         	localStore['notification_' + i + '_2'] = localStore.participant_id + "_" + b + "_" + date2;
-    //         	localStore['notification_' + i + '_3'] = localStore.participant_id + "_" + c + "_" + date3;
-    //         	localStore['notification_' + i + '_4'] = localStore.participant_id + "_" + d + "_" + date4;
-    //         	localStore['notification_' + i + '_5'] = localStore.participant_id + "_" + e + "_" + date5;
-    //         	localStore['notification_' + i + '_6'] = localStore.participant_id + "_" + f + "_" + date6;
-    //     }
-    // },
+    			//This part of the code records when the notifications are scheduled for and sends it to the server
+            	localStore['notification_' + i + '_1'] = localStore.participant_id + "_" + a + "_" + date1;
+            	localStore['notification_' + i + '_2'] = localStore.participant_id + "_" + b + "_" + date2;
+            	localStore['notification_' + i + '_3'] = localStore.participant_id + "_" + c + "_" + date3;
+            	localStore['notification_' + i + '_4'] = localStore.participant_id + "_" + d + "_" + date4;
+            	localStore['notification_' + i + '_5'] = localStore.participant_id + "_" + e + "_" + date5;
+            	localStore['notification_' + i + '_6'] = localStore.participant_id + "_" + f + "_" + date6;
+        }
+    },
 
     //Stage 4 of Customization
     //Uncomment lines inside the snoozeNotif function to test the snooze scheduling notification function
     //Replace X with the number of seconds you want the app to snooze for (e.g., 10 minutes is 600 seconds)
     //You can also customize the Title of the message, the snooze message that appears in the notification
     snoozeNotif:function() {
-            var now = new Date().getTime(), snoozeDate = new Date(now + 600*1000);
+            var now = new Date().getTime(), snoozeDate = new Date(now + 60*1000);
             var id = '99';
             cordova.plugins.notification.local.schedule({
                                                  icon: 'ic_launcher',
