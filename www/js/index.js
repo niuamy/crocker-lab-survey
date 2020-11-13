@@ -473,6 +473,8 @@ should be displayed using which formats before customizing this function*/
 
     renderLastPage: function(pageData, question_index) {
         $("#question").html(Mustache.render(lastPageTmpl, pageData));
+        var question = document.getElementById("question");
+        question.setAttribute("style","display: block");
         //This section should be implemented if you choose to use a snooze feature
         //It tells ExperienceSampler that if the participant has chosen to snooze the app,
         //the app should save a snooze value of 1 (this value will be used to reset the unique key, so that
