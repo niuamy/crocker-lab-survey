@@ -759,7 +759,7 @@ should be displayed using which formats before customizing this function*/
         	//in this example, we will set it to 8PM
         	var startDate = new Date();
             var startDay = startDate.getDate();
-            var startTime = startDate.setDate((startDay), 14,45,0,0);
+            var startTime = startDate.setDate((startDay), 18,30,0,0);
 
         	//Now calculate the amount of time between installation time and the first signal
             nextDiaryLag = parseInt(startTime) - parseInt(now);
@@ -767,15 +767,18 @@ should be displayed using which formats before customizing this function*/
         	//Section 2 to 5 go inside the for loop
         	// Set X to the length of your experience sampling period (i.e., how many days you will 
             // be collecting data from your participants)
-            //X has been set to 1 day
-        for (i = 0; i < 1; i++){
+            //X has been set to 3 days, so three notifications will be set up
+        for (i = 0; i < 3; i++){
 
         	//Section 2 - Calculate time intervals
         	//For this design you just calculate how many milliseconds until the first signal and then add multiples of the 
         	//number of milliseconds in day to this so that it fires everyday of your experience sampling data collection period
-            interval = nextDiaryLag + day*i;
+            //Previous example: interval = nextDiaryLag + day*i;
+            //Note: the interval is set to 1 minute + Xday
+            interval = 60000 + day*i;
 
         	//now convert this interval into a new date object that the plugin can use to schedule your notification
+            //Note: a new notification should be set for the next three days at one minute past the current time
             date1 = new Date(now + interval);
 
         	//Section 3 - Creating Unique Ids - create a unique notification id so notifications don't overwrite each other
@@ -785,7 +788,7 @@ should be displayed using which formats before customizing this function*/
         	//Section 4 - Scheduling the notification
         	//Now put all these properties into the scheduling function of the plugin
         	cordova.plugins.notification.local.schedule({icon: 'ic_launcher', id: a, at: date1, text: 'Time for your next Diary Survey!', title: 'Diary Survey'});
-
+            
         	//Section 5 - Recording notifications
         	//Now you want to record your notifications to make sure that they have been scheduled
         	//You can also calculate response latencies if you with these values later if you want
