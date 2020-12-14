@@ -603,7 +603,7 @@ should be displayed using which formats before customizing this function*/
         		//You will test local notifications in Stage 4 of customizing the app
         		// ********IF YOU HAVE NO QUESTION LOGIC BUT HAVE SCHEDULED NOTIFICATIONS, YOU NEED TO UNCOMMENT THE FOLLOWING LINE
         		// TO EXECUTE THE scheduleNotifs() FUNCTION********	
-            if (count == -1){app.scheduleNotifs();app.renderLastPage(lastPage[0], count);app.scheduleNotifs();}
+            if (count == -1){app.scheduleNotifs();app.renderLastPage(lastPage[0], count);}
             //Identify the next question to populate the view
         		//the next statement is about the snooze function
         		//This statement says that if the participant says they are currently unable to complete the questionnaire now,
@@ -740,202 +740,211 @@ should be displayed using which formats before customizing this function*/
     // Stage 5 of Customization
     //This code is for a interval-contingent design where all participants answer the questionnaire at the same time
     //(i.e., not customized to their schedule)
-    scheduleNotifs:function(){
-        	//Section 1 - Declaring necessary variables
-        	//need an interval variable, 
-        	var interval;
-        	//a variable for the notification id
-        	var a;
-         //one to represent each of new dates to be calculated for each signal
-        	var date1;
-        	//Then you need a variable to represent the amount of time from now until the first signal
-        	var nextDiaryLag;
-        	//Then you can declare any values that you might use more than once such as the number of milliseconds in a day
-        	var day = 86400000; 
-        	//You'll also need to get time the app is being installed
-            var now = new Date().getTime();
+//     scheduleNotifs:function(){
+//         	//Section 1 - Declaring necessary variables
+//         	//need an interval variable, 
+//         	var interval;
+//         	//a variable for the notification id
+//         	var a;
+//          //one to represent each of new dates to be calculated for each signal
+//         	var date1;
+//         	//Then you need a variable to represent the amount of time from now until the first signal
+//         	var nextDiaryLag;
+//         	//Then you can declare any values that you might use more than once such as the number of milliseconds in a day
+//         	var day = 86400000; 
+//         	//You'll also need to get time the app is being installed
+//             var now = new Date().getTime();
            
-        	//Now you can use the date object approach to set the time of the first signal
-        	//in this example, we will set it to 8PM
-        	var startDate = new Date();
-            var startDay = startDate.getDate();
-            var startTime = startDate.setDate((startDay), 18,30,0,0);
+//         	//Now you can use the date object approach to set the time of the first signal
+//         	//in this example, we will set it to 8PM
+//         	var startDate = new Date();
+//             var startDay = startDate.getDate();
+//             var startTime = startDate.setDate((startDay), 18,30,0,0);
 
-        	//Now calculate the amount of time between installation time and the first signal
-            nextDiaryLag = parseInt(startTime) - parseInt(now);
+//         	//Now calculate the amount of time between installation time and the first signal
+//             nextDiaryLag = parseInt(startTime) - parseInt(now);
 
-        	//Section 2 to 5 go inside the for loop
-        	// Set X to the length of your experience sampling period (i.e., how many days you will 
-            // be collecting data from your participants)
-            //X has been set to 3 days, so three notifications will be set up
-        for (i = 0; i < 3; i++){
+//         	//Section 2 to 5 go inside the for loop
+//         	// Set X to the length of your experience sampling period (i.e., how many days you will 
+//             // be collecting data from your participants)
+//             //X has been set to 3 days, so three notifications will be set up
+//         for (i = 0; i < 3; i++){
 
-        	//Section 2 - Calculate time intervals
-        	//For this design you just calculate how many milliseconds until the first signal and then add multiples of the 
-        	//number of milliseconds in day to this so that it fires everyday of your experience sampling data collection period
-            //Previous example: interval = nextDiaryLag + day*i;
-            //Note: the interval is set to 1 minute + Xday
-            interval = 60000 + day*i;
+//         	//Section 2 - Calculate time intervals
+//         	//For this design you just calculate how many milliseconds until the first signal and then add multiples of the 
+//         	//number of milliseconds in day to this so that it fires everyday of your experience sampling data collection period
+//             //Previous example: interval = nextDiaryLag + day*i;
+//             //Note: the interval is set to 1 minute + Xday
+//             interval = 60000 + day*i;
 
-        	//now convert this interval into a new date object that the plugin can use to schedule your notification
-            //Note: a new notification should be set for the next three days at one minute past the current time
-            date1 = new Date(now + interval);
+//         	//now convert this interval into a new date object that the plugin can use to schedule your notification
+//             //Note: a new notification should be set for the next three days at one minute past the current time
+//             date1 = new Date(now + interval);
 
-        	//Section 3 - Creating Unique Ids - create a unique notification id so notifications don't overwrite each other
-        	//set it to the counter value to ensure it is unique
-        	a = i;
+//         	//Section 3 - Creating Unique Ids - create a unique notification id so notifications don't overwrite each other
+//         	//set it to the counter value to ensure it is unique
+//         	a = i;
 
-        	//Section 4 - Scheduling the notification
-        	//Now put all these properties into the scheduling function of the plugin
-        	cordova.plugins.notification.local.schedule({icon: 'ic_launcher', id: a, at: date1, text: 'Time for your next Diary Survey!', title: 'Diary Survey'});
+//         	//Section 4 - Scheduling the notification
+//         	//Now put all these properties into the scheduling function of the plugin
+//         	cordova.plugins.notification.local.schedule({icon: 'ic_launcher', id: a, at: date1, text: 'Time for your next Diary Survey!', title: 'Diary Survey'});
             
-        	//Section 5 - Recording notifications
-        	//Now you want to record your notifications to make sure that they have been scheduled
-        	//You can also calculate response latencies if you with these values later if you want
-        	localStore['notification_' + a] = localStore.participant_id + "_" + a + "_" + date1; 
-        }
-   },
+//         	//Section 5 - Recording notifications
+//         	//Now you want to record your notifications to make sure that they have been scheduled
+//         	//You can also calculate response latencies if you with these values later if you want
+//         	localStore['notification_' + a] = localStore.participant_id + "_" + a + "_" + date1; 
+//         }
+//    },
 
-    // This code is for signal-contingent designs with varying time intervals between notifications
-    // scheduleNotifs:function() {
-    // 		//Section 1 - Declaring necessary variables
-    // 		//Declares the number of intervals between the notifications for each day (i.e., if beeping participants 6 times, declare 6 intervals)
-    //         var interval1, interval2, interval3, interval4, interval5, interval6;
+//    This code is for signal-contingent designs with varying time intervals between notifications
+    scheduleNotifs:function() {
+    		//Section 1 - Declaring necessary variables
+    		//Declares the number of intervals between the notifications for each day (i.e., if beeping participants 6 times, declare 6 intervals)
+            var interval1, interval2, interval3, interval4, interval5, interval6;
 
-    // 		//Declares a variable to represent the id of each notification for the day
-    // 		//Declare as many letters as you have intervals (i.e., 6 intervals, declare 6 ids)
-    //         var a, b, c, d, e, f;
+    		//Declares a variable to represent the id of each notification for the day
+    		//Declare as many letters as you have intervals (i.e., 6 intervals, declare 6 ids)
+            var a, b, c, d, e, f;
 
-    // 		//Declare a variable to represent new date to be calculated for each beep
-    // 		//That is, if there are 6 intervals, declare 6 new dates
-    //         var date1, date2, date3, date4, date5, date6;
+    		//Declare a variable to represent new date to be calculated for each beep
+    		//That is, if there are 6 intervals, declare 6 new dates
+            var date1, date2, date3, date4, date5, date6;
 
-    // 		//The statement below declares the start and end time of the daily data collection period
-    // 		//These variables are not necessary if the start and end time of the daily data collection period do not vary across the experience
-    // 		//sampling data collection period
-    //         var currentMaxHour, currentMaxMinute, currentMinHour, currentMinMinute, nextMinHour, nextMinMinute;
+    		//The statement below declares the start and end time of the daily data collection period
+    		//These variables are not necessary if the start and end time of the daily data collection period do not vary across the experience
+    		//sampling data collection period
+            var currentMaxHour, currentMaxMinute, currentMinHour, currentMinMinute, nextMinHour, nextMinMinute;
 
-    // 		//The next three lines create variables for the present time when the notifications are being scheduled
-    //         var dateObject = new Date();
-    //         var now = dateObject.getTime();
-    //         var dayOfWeek = dateObject.getDay(), currentHour = dateObject.getHours(), currentMinute = dateObject.getMinutes();
+    		//The next three lines create variables for the present time when the notifications are being scheduled
+            var dateObject = new Date();
+            var now = dateObject.getTime();
+            var dayOfWeek = dateObject.getDay(), currentHour = dateObject.getHours(), currentMinute = dateObject.getMinutes();
 
-    // 		//The next variables represent the amount of time between the end of the data collection to the start of the next one (nightlyLag), 
-    // 		//the interval between the scheduling time and the start of the first data collection period (currentLag), the maximum amount of time
-    // 		//in the data collection period (maxInterval), and the time between until the end of the next data collection period (in our case 
-    // 		//dinner time; dinnerInterval)
-    //          var currentLag, maxInterval, dinnerInterval;
+    		//The next variables represent the amount of time between the end of the data collection to the start of the next one (nightlyLag), 
+    		//the interval between the scheduling time and the start of the first data collection period (currentLag), the maximum amount of time
+    		//in the data collection period (maxInterval), and the time between until the end of the next data collection period (in our case 
+    		//dinner time; dinnerInterval)
+            var currentLag, maxInterval, dinnerInterval;
 
-    // 		//These represents the participants time values 
-    // 		var weekendDinnerTime = localStore.weekendSleepTime.split(":");
-    // 		var weekendWakeTime = localStore.weekendWakeTime.split(":");
-    // 		var weekdayDinnerTime = localStore.weekdaySleepTime.split(":");
-    // 		var weekdayWakeTime = localStore.weekdayWakeTime.split(":");
+    		//These represents the participants time values 
+    		var weekendDinnerTime = localStore.weekendSleepTime.split(":");
+    		var weekendWakeTime = localStore.weekendWakeTime.split(":");
+    		var weekdayDinnerTime = localStore.weekdaySleepTime.split(":");
+    		var weekdayWakeTime = localStore.weekdayWakeTime.split(":");
 
-    // 		//Then you can declare any values that you might use more than once such as the number of milliseconds in a day
-    //         var day = 86400000;
-    //         var minDiaryLag = 30000;//30 seconds
-    //         var randomDiaryLag = 60000;//1 minute
-    //         var minDiaryLagAfterDinner = 5400000;
+    		//Then you can declare any values that you might use more than once such as the number of milliseconds in a day
+            var day = 86400000;
+            var minDiaryLag = 300000;//5 minute
+            var randomDiaryLag = 300000;//5 minute
+            //var hour = 3600000;
+            var minDiaryLagAfterDinner = 5400000;
 
-    // 		//This is a loop that repeats this block of codes for the number of days there are in the experience sampling period
-    // 		//Replace X with the number of days in the experience sampling period (e.g., collecting data for 7 days, replace X with 7)
-    // 		//Note that iOS apps can only have 64 unique notifications, so you should keep that in mind if you are collecting data 
-    // 		//for more than longer periods of time
-    //     for (i = 0; i < 1; i++)
-    //     {
-    // 		//The code below (up to "else { nightlyLag = ...}" is only necessary if you allow the daily data collection period to vary across 
-    // 		//weekdays and weekends
-    //         var alarmDay = dayOfWeek + 1 + i;
-    //         if (alarmDay > 6) {alarmDay = alarmDay-7;}
-    //         //enter time weekendDinnerTime hour and then enter weekendDinnerTime minute
-    //    			if (alarmDay > 6) {alarmDay = alarmDay - 7;}
-    //    			if (alarmDay == 0 || alarmDay == 6) {
-    //    				currentMaxHour = weekendDinnerTime[0];
-    //    				currentMaxMinutes = weekendDinnerTime[1];
-    //    				currentMinHour = weekendWakeTime[0];
-    //    				currentMinMinutes = weekendWakeTime[1];
-    //    				if (alarmDay == 0) {
-    //    					nextMinHour = weekdayWakeTime[0];
-    //    					nextMinMinutes = weekdayWakeTime[1];
-    //    				}
-    //    				else {
-    //    					nextMinHour = weekendWakeTime[0];
-    //    					nextMinMinutes = weekendWakeTime[1];
-    //    				}
-    //    				currentLag = (((((24 - parseInt(currentHour) + parseInt(weekendWakeTime[0]))*60) - parseInt(currentMinute) + parseInt(weekendWakeTime[1]))*60)*1000);
+    		//This is a loop that repeats this block of codes for the number of days there are in the experience sampling period
+    		//Replace X with the number of days in the experience sampling period (e.g., collecting data for 7 days, replace X with 7)
+    		//Note that iOS apps can only have 64 unique notifications, so you should keep that in mind if you are collecting data 
+    		//for more than longer periods of time
+        for (i = 0; i < 2; i++)
+        {
+    		//The code below (up to "else { nightlyLag = ...}" is only necessary if you allow the daily data collection period to vary across 
+    		//weekdays and weekends
+            var alarmDay = dayOfWeek + 1 + i;
+            if (alarmDay > 6) {alarmDay = alarmDay-7;}
+            //enter time weekendDinnerTime hour and then enter weekendDinnerTime minute
+       			if (alarmDay > 6) {alarmDay = alarmDay - 7;}
+       			if (alarmDay == 0 || alarmDay == 6) {
+       				currentMaxHour = weekendDinnerTime[0];
+       				currentMaxMinutes = weekendDinnerTime[1];
+       				currentMinHour = weekendWakeTime[0];
+       				currentMinMinutes = weekendWakeTime[1];
+       				if (alarmDay == 0) {
+       					nextMinHour = weekdayWakeTime[0];
+       					nextMinMinutes = weekdayWakeTime[1];
+       				}
+       				else {
+       					nextMinHour = weekendWakeTime[0];
+       					nextMinMinutes = weekendWakeTime[1];
+       				}
+       				currentLag = (((((24 - parseInt(currentHour) + parseInt(weekendWakeTime[0]))*60) - parseInt(currentMinute) + parseInt(weekendWakeTime[1]))*60)*1000);
     				
-    //    			}
-    //    			else {
-    //    				currentMaxHour = weekdayDinnerTime[0];
-    //    				currentMaxMinutes = weekdayDinnerTime[1];
-    //    				currentMinHour = weekdayWakeTime[0];
-    //    				currentMinMinutes = weekdayWakeTime[1];   				
-    //    				if (alarmDay == 5) {
-    //    					nextMinHour = weekendWakeTime[0];
-    //    					nextMinMinutes = weekendWakeTime[1];
-    //    				}
-    //    				else {
-    //    					nextMinHour = weekdayWakeTime[0];
-    //    					nextMinMinutes = weekdayWakeTime[1];   				
-    //    				}
-    //                 currentLag = (((((24 - parseInt(currentHour) + parseInt(weekdayWakeTime[0]))*60) - parseInt(currentMinute) + parseInt(weekdayWakeTime[1]))*60)*1000);
-    //    			}
-    //    			if (alarmDay == 5 || alarmDay == 0) {nightlyLag = currentLag;}
-    //    			else {
-    //             	nightlyLag= (((((24 - parseInt(currentHour) + parseInt(nextMinHour))*60) - parseInt(currentMinute) + parseInt(nextMinMinutes))*60)*1000);
-    //    			}
+       			}
+       			else {
+       				currentMaxHour = weekdayDinnerTime[0];
+       				currentMaxMinutes = weekdayDinnerTime[1];
+       				currentMinHour = weekdayWakeTime[0];
+       				currentMinMinutes = weekdayWakeTime[1];   				
+       				if (alarmDay == 5) {
+       					nextMinHour = weekendWakeTime[0];
+       					nextMinMinutes = weekendWakeTime[1];
+       				}
+       				else {
+       					nextMinHour = weekdayWakeTime[0];
+       					nextMinMinutes = weekdayWakeTime[1];   				
+       				}
+                    currentLag = (((((24 - parseInt(currentHour) + parseInt(weekdayWakeTime[0]))*60) - parseInt(currentMinute) + parseInt(weekdayWakeTime[1]))*60)*1000);
+       			}
+       			if (alarmDay == 5 || alarmDay == 0) {nightlyLag = currentLag;}
+       			else {
+                	nightlyLag= (((((24 - parseInt(currentHour) + parseInt(nextMinHour))*60) - parseInt(currentMinute) + parseInt(nextMinMinutes))*60)*1000);
+       			}
 
-    //         //The maxInterval is the number of milliseconds between wakeup time and dinner time
-    //         maxInterval = (((((parseInt(currentMaxHour) - parseInt(currentMinHour))*60) + parseInt(currentMaxMinute) - parseInt(currentMinMinute))*60)*1000);
-    // 			//This part of the code calculates how much time there should be between the questionnaires
-    // 			//Change X to the minimum amount of time that should elapse between beeps in seconds
-    // 			//Change Y to the amount of additional time in seconds that should elapse to reach the maximum amount of time
-    // 			//The part of the code that accompanies Y randomly generates a number that allows for notifications to occur randomly between X and X+Y after the previous beep
-    // 			//That is, X + Y = maximum amount of time that can elapse between beeps
+            //The maxInterval is the number of milliseconds between wakeup time and dinner time
+            maxInterval = (((((parseInt(currentMaxHour) - parseInt(currentMinHour))*60) + parseInt(currentMaxMinute) - parseInt(currentMinMinute))*60)*1000);
+    			//This part of the code calculates how much time there should be between the questionnaires
+    			//Change X to the minimum amount of time that should elapse between beeps in seconds
+    			//Change Y to the amount of additional time in seconds that should elapse to reach the maximum amount of time
+    			//The part of the code that accompanies Y randomly generates a number that allows for notifications to occur randomly between X and X+Y after the previous beep
+    			//That is, X + Y = maximum amount of time that can elapse between beeps
     
-    // 			//If designing an interval-based design, delete "Math.round(Math.random()*Y)+" and replace X with the amount of time in seconds between each beep
-    //    			interval1 = parseInt(currentLag) + (parseInt(Math.round(Math.random()*randomDiaryLag)+minDiaryLag)) + day*i;
-    //    			interval2 = interval1 + (parseInt(Math.round(Math.random()*randomDiaryLag)+minDiaryLag));
-    //    			interval3 = interval2 + (parseInt(Math.round(Math.random()*randomDiaryLag)+minDiaryLag));
-    //    			interval4 = interval3 + (parseInt(Math.round(Math.random()*randomDiaryLag)+minDiaryLag));
-    //    			interval5 = interval4 + (parseInt(Math.round(Math.random()*randomDiaryLag)+minDiaryLag));
-    //             interval6 = interval5 + (parseInt(Math.round(Math.random()*randomDiaryLag)+minDiaryLag));
-       
-    // 			//This part of the code calculates a unique ID for each notification     
-    //             a = 101+(parseInt(i)*100);
-    //             b = 102+(parseInt(i)*100);
-    //             c = 103+(parseInt(i)*100);
-    //             d = 104+(parseInt(i)*100);
-    //             e = 105+(parseInt(i)*100);
-    //             f = 106+(parseInt(i)*100);
-    
-    // 			//This part of the code calculates the time when the notification should be sent by adding the time interval to the current date and time        
-    //             date1 = new Date(now + interval1);
-    //             date2 = new Date(now + interval2);
-    //             date3 = new Date(now + interval3);
-    //             date4 = new Date(now + interval4);
-    //             date5 = new Date(now + interval5);
-    //             date6 = new Date(now + interval6);
+    			//If designing an interval-based design, delete "Math.round(Math.random()*Y)+" and replace X with the amount of time in seconds between each beep
+       			//interval1 = parseInt(currentLag) + (parseInt(Math.round(Math.random()*randomDiaryLag)+minDiaryLag)) + day*i;
+                interval1 = (parseInt(Math.round(Math.random()*randomDiaryLag)+minDiaryLag)) + day*i;   
+                interval2 = interval1 + (parseInt(Math.round(Math.random()*randomDiaryLag)+minDiaryLag));
+       			interval3 = interval2 + (parseInt(Math.round(Math.random()*randomDiaryLag)+minDiaryLag));
+       			interval4 = interval3 + (parseInt(Math.round(Math.random()*randomDiaryLag)+minDiaryLag));
+       			interval5 = interval4 + (parseInt(Math.round(Math.random()*randomDiaryLag)+minDiaryLag));
+                interval6 = interval5 + (parseInt(Math.round(Math.random()*randomDiaryLag)+minDiaryLag));
+                
+    			//This part of the code calculates a unique ID for each notification     
+                a = 101+(parseInt(i)*100);
+                b = 102+(parseInt(i)*100);
+                c = 103+(parseInt(i)*100);
+                d = 104+(parseInt(i)*100);
+                e = 105+(parseInt(i)*100);
+                f = 106+(parseInt(i)*100);
+
+    			//This part of the code calculates the time when the notification should be sent by adding the time interval to the current date and time        
+                date1 = new Date(now + interval1);
+                date2 = new Date(now + interval2);
+                date3 = new Date(now + interval3);
+                date4 = new Date(now + interval4);
+                date5 = new Date(now + interval5);
+                date6 = new Date(now + interval6);
             
-    // 			//This part of the code schedules the notifications
-    //         	cordova.plugins.notification.local.schedule([
-    //         		{icon: 'ic_launcher', id: a, title: 'Diary Surveys', text: 'Time for your next Diary Survey!', at: date1,}, 
-    //         		{icon: 'ic_launcher', id: b, title: 'Diary Surveys', text: 'Time for your next Diary Survey!', at: date2,},
-    //         		{icon: 'ic_launcher', id: c, title: 'Diary Surveys', text: 'Time for your next Diary Survey!', at: date3,},
-    //         		{icon: 'ic_launcher', id: d, title: 'Diary Surveys', text: 'Time for your next Diary Survey!', at: date4,},
-    //         		{icon: 'ic_launcher', id: e, title: 'Diary Surveys', text: 'Time for your next Diary Survey!', at: date5,},
-    //         		{icon: 'ic_launcher', id: f, title: 'Diary Surveys', text: 'Time for your next Diary Survey!', at: date6,}]);
-
-    // 			//This part of the code records when the notifications are scheduled for and sends it to the server
-    //         	localStore['notification_' + i + '_1'] = localStore.participant_id + "_" + a + "_" + date1;
-    //         	localStore['notification_' + i + '_2'] = localStore.participant_id + "_" + b + "_" + date2;
-    //         	localStore['notification_' + i + '_3'] = localStore.participant_id + "_" + c + "_" + date3;
-    //         	localStore['notification_' + i + '_4'] = localStore.participant_id + "_" + d + "_" + date4;
-    //         	localStore['notification_' + i + '_5'] = localStore.participant_id + "_" + e + "_" + date5;
-    //         	localStore['notification_' + i + '_6'] = localStore.participant_id + "_" + f + "_" + date6;
-    //     }
-    // },
+                console.log("date1: " + date1);
+                console.log("date2: " + date2);
+                console.log("date3: " + date3);
+                console.log("date4: " + date4);
+                console.log("date5: " + date5);
+                console.log("date6: " + date6);
+            
+    			//This part of the code schedules the notifications
+            	cordova.plugins.notification.local.schedule([
+            		{icon: 'ic_launcher', id: a, title: 'Diary Surveys', text: 'Time for your next Diary Survey!', at: date1,}, 
+            		{icon: 'ic_launcher', id: b, title: 'Diary Surveys', text: 'Time for your next Diary Survey!', at: date2,},
+            		{icon: 'ic_launcher', id: c, title: 'Diary Surveys', text: 'Time for your next Diary Survey!', at: date3,},
+            		{icon: 'ic_launcher', id: d, title: 'Diary Surveys', text: 'Time for your next Diary Survey!', at: date4,},
+            		{icon: 'ic_launcher', id: e, title: 'Diary Surveys', text: 'Time for your next Diary Survey!', at: date5,},
+            		{icon: 'ic_launcher', id: f, title: 'Diary Surveys', text: 'Time for your next Diary Survey!', at: date6,}]);
+            		
+    			//This part of the code records when the notifications are scheduled for and sends it to the server
+            	localStore['notification_' + i + '_1'] = localStore.participant_id + "_" + a + "_" + date1;
+            	localStore['notification_' + i + '_2'] = localStore.participant_id + "_" + b + "_" + date2;
+            	localStore['notification_' + i + '_3'] = localStore.participant_id + "_" + c + "_" + date3;
+            	localStore['notification_' + i + '_4'] = localStore.participant_id + "_" + d + "_" + date4;
+            	localStore['notification_' + i + '_5'] = localStore.participant_id + "_" + e + "_" + date5;
+                localStore['notification_' + i + '_6'] = localStore.participant_id + "_" + f + "_" + date6;
+        }
+    },
 
     //Stage 4 of Customization
     //Uncomment lines inside the snoozeNotif function to test the snooze scheduling notification function
