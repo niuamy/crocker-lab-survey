@@ -47,153 +47,31 @@ var surveyQuestions = [
         "questionPrompt": "Welcome to the Crocker Lab Survey!",
     },
     /*2*/
-    /*a "mult1" question is for multiple choice questions and for Likert-scale items that only contain 
-                       positive values (including 0). Below is what a multiple choice question would look like*/
-    {
-        "type":"mult1",
-        "variableName": "student",
-        "questionPrompt": "Are you a college student?",
-        "minResponse": 0,
-        "maxResponse": 1,
-        "labels": [
-            {"label": "No"},
-            {"label": "Yes"}
-        ],
-    },
-    /*3*/
-    /*this is what a "mult1" for a regular rating scale with only positive values (including 0) looks like*/                       
-    {
-        "type":"mult1",
-        "variableName": "year",
-        "questionPrompt": "What year are you?",
-        "minResponse": 0,
-        "maxResponse": 4,
-        "labels": [
-            {"label": "First"},
-            {"label": "Second"},
-            {"label": "Third"},
-            {"label": "Fourth"},
-            {"label": "Fifth+"},
-        ]
-    },
-    /*4*/
     {
         "type":"mult1",
         "variableName": "socialMediaFrequency",
-        "questionPrompt": "Have you used social media within the last day?",
+        "questionPrompt": "Did you receive the first or second notification?",
         "minResponse": 0,
         "maxResponse": 1,
         "labels": [
-            {"label": "No"},
-            {"label": "Yes"},
+            {"label": "First"},
+            {"label": "Second"},
         ]
     },
-    /*5*/
-    /*a "checklist" question looks exactly the same as a multiple choice option in terms of what properties
-                       you need to specify. The different in formatting will appear when ExperiencesSampler renders it. */
+    /*3*/
+    /*Instructions*/                       
     {
-        "type":"checklist",
-        "variableName": "socialMediaUsed",
-        "questionPrompt": "What of these social media platforms do you use?",
-        "minResponse": 0,
-        "maxResponse": 4,
-
-        "labels": [
-            {"label": "Facebook"},
-            {"label": "Twitter"},
-            {"label": "Instagram"},
-            {"label": "Snapchat"},
-            {"label": "Other"},
-        ],
+        "type":"instructions",
+        "variableName": "instruction2",
+        "questionPrompt": "[insert instructions]",
     },
-
-    /*6*/
+    /*4*/
+    /*Link*/                       
     {
-        "type":"mult1",
-        "variableName": "lastSocialMediaUsage",
-        "questionPrompt": "When was the last time you used social media?",
-        "minResponse": 0,
-        "maxResponse": 3,
-        "labels": [
-            {"label": "Within the last week"},
-            {"label": "Within the last two weeks"},
-            {"label": "Within the last month"},
-            {"label": "More than a month ago"},
-        ]
-    },
-
-    /*7*/
-    /*a "text" question is an open-ended question in which participants can enter values*/
-    {
-        "type":"text",
-        "variableName": "mostUsedSocialMedia",
-        "questionPrompt": "Which social media do you use most often?",
-    },
-
-    /*8*/
-    /*a "slider" item using a sliding rating scale. It only needs your question prompt and the minimum and
-                       maximum values of your sliding scale. ExperienceSampler will set the default value to be the midpoint*/
-    {
-        "type":"slider",
-        "variableName": "userFeeling",
-        "questionPrompt": "How do you feel about SOCIALMEDIA, where 0 is negative and 100 is positive?",
-        "minResponse": 0,
-        "maxResponse": 100,
-    },
-    /*9*/
-    // test piped text choice wording
-    {
-        "type":"mult1",
-        "variableName": "mostPopularSocialMedia",
-        "questionPrompt": "Select the social media app you think is the most popular among your age group.",
-        "minResponse": 0,
-        "maxResponse": 5,
-        "labels": [
-            {"label": "SOCIALMEDIA"},
-            {"label": "Facebook"},
-            {"label": "Twitter"},
-            {"label": "Instagram"},
-            {"label": "Snapchat"},
-            {"label": "Other"},
-        ]
-    },
-    // /*6*/
-    // /*mult2 is a question where the scale values are reversed (i.e., max response value is assigned to the 
-    //                    first label and the min value is assigned to the last label). This question format is useful
-    //                    if you have a scale that ranges from a negative value to a positive value. Existing research (e.g., Schwarz & Keus, 2004)
-    //                    suggests mental numbers with both positive numbers and negative numbers have positive numbers on top 
-    //                    and negative numbers towards the bottom */
-    // {
-    //     "type":"mult2",
-    //     "variableName": "feeling",
-    //     "questionPrompt": "How did you feel when you last used social media?",
-    //     "minResponse": -3,
-    //     "maxResponse": 3,
-    //     "labels": [
-    //         {"label": "label for highest scale point"},
-    //         {"label": "label for next largest scale point"},
-    //         {"label": "label for next largest scale point"},
-    //         {"label": "label for midpoint of scale point"},
-    //         {"label": "label for next scale point"},
-    //         {"label": "label for next smallest scale point"},
-    //         {"label": "label for smallest scale point"},
-    //     ]
-    // },
-    // /*7*/
-    // /*a "text" question is an open-ended question in which participants can enter values*/
-    // {
-    //     "type":"text",
-    //     "variableName": "socialMediaUse",
-    //     "questionPrompt": "Describe what you did on social media the last time you used it:",
-    // },
-    /*8*/
-    /* a "link" question allows participants to access a survey through an onine survey platform*/
-    // {
-    //     "type":"link",
-    //     "variableName": "link1",
-    //     "questionPrompt": "Please click <a href=â€˜google.comâ€™ target=â€˜_blankâ€™>HERE</a> to open your survey.",
-    // },       
-    /*input additional questions*/
+        "type":"link",
+        "variableName": "link",
+        "questionPrompt": "Please click <a href='https://www.google.com/' target='_blank'>HERE</a> to open your survey!",
+    },  
 ];
 
 /*These are the messages that are displayed at the end of the questionnaire*/
@@ -253,7 +131,7 @@ var textTmpl = "<li><textarea cols=50 rows=5 id='{{id}}'></textarea></li><li><bu
 var numberTmpl = "<li><input type='number' id='{{id}}'></input></li><br/><br/><li></li><li><button type='submit' value='Enter'>Enter</button></li>";
 var checkListTmpl =  "<li><input type='checkbox' id='{{id}}' value='{{value}}'>{{label}}</input></li>";
 var instructionTmpl = "<li><button id='{{id}}' value = 'Next'>Next</button></li>";
-var linkTmpl = "<li><button id='{{id}}' value = 'Next'>Click here AFTER finishing the survey in the link above</button></li>";
+//var linkTmpl = "<li><button id='{{id}}' value = 'Next'>Click here AFTER finishing the survey in the link above</button></li>";
 var sliderTmpl = "<li><input type='range' min='{{min}}' max='{{max}}' value='{{value}}' orient=vertical id='{{id}}' oninput='outputUpdate(value)'></input><output for='{{id}}' id='slider'>50</output><script>function outputUpdate(slidervalue){document.querySelector('#slider').value=slidervalue;}</script></li><li><button type='submit' value='Enter'>Enter</button></li>";
 var datePickerTmpl = '<li><input id="{{id}}" data-format="DD-MM-YYYY" data-template="D MMM YYYY" name="date"><br /><br /></li><li><button type="submit" value="Enter">Enter</button></li><script>$(function(){$("input").combodate({firstItem: "name",minYear:2015, maxYear:2016});});</script>';
 var dateAndTimePickerTmpl = '<li><input id="{{id}}" data-format="DD-MM-YYYY-HH-mm" data-template="D MMM YYYY  HH:mm" name="datetime24"><br /><br /></li><li><button type="submit" value="Enter">Enter</button></li><script>$(function(){$("input").combodate({firstItem: "name",minYear:2015, maxYear:2016});});</script>';
@@ -265,7 +143,7 @@ var uniqueKey;
 //If you need to declare any other global variables (i.e., variables to be used in more than one function of ExperienceSampler)
 //you should declare them here. 
 //For example, you might declare your piped text variable or your question branch response variable
-var socialMedia; /*sample piped text variable*/
+//var socialMedia; /*sample piped text variable*/
 
 var app = {
     // Application Constructor
@@ -295,16 +173,15 @@ should be displayed using which formats before customizing this function*/
         var question;
         if (question_index <= -1) {question = participantSetup[question_index + NUMSETUPQS];}
         else {question = surveyQuestions[question_index];}
-        // console.log("question index: " + question_index);
-        // console.log("question: " + JSON.stringify(question));
+    
         var questionPrompt = question.questionPrompt;
         //If you want to include piped text in your question wording, you would implement it in this section. 
         //Below is an example of how you would look for the NAME placeholder in your surveyQuestion questionPrompts 
         //and replace it with the response value that you assign to the name variable
         //See our example app to see how you can implement this
-        if (questionPrompt.indexOf('SOCIALMEDIA') >= 0) {
-		questionPrompt = questionPrompt.replace("SOCIALMEDIA", function replacer() {return name;});
-      	}
+        // if (questionPrompt.indexOf('SOCIALMEDIA') >= 0) {
+		//     questionPrompt = questionPrompt.replace("SOCIALMEDIA", function replacer() {return name;});
+      	// }
         question.questionText = Mustache.render(questionTextTmpl, {questionPrompt: questionPrompt});    
         //Now populate the view for this question, depending on what the question type is
         //This part of the function will render different question formats depending on the type specified
@@ -395,7 +272,7 @@ should be displayed using which formats before customizing this function*/
                 });
                 break;
             case 'link':
-                question.buttons = Mustache.render(linkTmpl, {id: question.variableName+"1"});
+                //question.buttons = Mustache.render(linkTmpl, {id: question.variableName+"1"});
                 $("#question").html(Mustache.render(questionTmpl, question)).fadeIn(400);
                 var instruction = [];
                 $("#question ul li button").click(function(){ 
@@ -481,12 +358,7 @@ should be displayed using which formats before customizing this function*/
         //this data is does not have the same unique key as the subsequent questionnaire)
         if (question_index == SNOOZEQ) {
             app.snoozeNotif();
-            localStore.snoozed = 1;
-            app.saveData();        
-        }
-        //If you choose to implement the snooze function, uncomment the else in the statement below
-        else if (question_index == -1) {
-            app.saveDataLastPage();
+            localStore.snoozed = 1;      
         }
         //This part of the code says that if the participant has completed the entire questionnaire,
         //ExperienceSampler should create a completed tag for it.
@@ -497,7 +369,6 @@ should be displayed using which formats before customizing this function*/
             var datestamp = new Date();
             var year = datestamp.getFullYear(), month = datestamp.getMonth(), day=datestamp.getDate(), hours=datestamp.getHours(), minutes=datestamp.getMinutes(), seconds=datestamp.getSeconds(), milliseconds=datestamp.getMilliseconds();
             localStore[uniqueKey + '.' + "completed" + "_" + "completedSurvey"  + "_" + year + "_" + month + "_" + day + "_" + hours + "_" + minutes + "_" + seconds  + "_" + milliseconds] = 1;	
-            app.saveDataLastPage();
         }
     },
 
@@ -505,7 +376,6 @@ should be displayed using which formats before customizing this function*/
     init: function() {
         //First, we assign a value to the unique key when we initialize ExperienceSampler
         uniqueKey = new Date().getTime();
-        console.log(uniqueKey);
         //The statement below states that if there is no participant id or if the participant id is left blank,
         //ExperienceSampler would present the participant set up questions
         if (localStore.participant_id === " " || !localStore.participant_id || localStore.participant_id == "undefined") {app.renderQuestion(-NUMSETUPQS);}  
@@ -583,77 +453,28 @@ should be displayed using which formats before customizing this function*/
             else {uniqueRecord = uniqueKey + "_" + currentQuestion + "_" + year + "_" + month + "_" + day + "_" + hours + "_" + minutes + "_" + seconds + "_" + milliseconds;}
             //Save this to local storage
             localStore[uniqueRecord] = response;
-        		
 
-
-        //		/*Question Logic Statements*/
+        //*Question Logic Statements*/
         //Stage 3 of Customization
-        		//if your questionnaire has two branches based on the absence or presence of a phenomenon, you will need the next statement
-        		//this statement allows you to record whether the phenomenon was absent or present so you can specify which branch the participant should complete when
-        		//the questionnaire splits into the two branches
-        		//if not then you do not need the next statement and should leave it commented out
-        		//if you have piped text, you would assign your response variable here
-        		//where X is the question index number of the question you ask for response you would like to pipe
-        		//In this example, we just use name to consist with our earlier variables
-            // if (count != 7) {phenomenonPresence = response;}
-            //Piped Text
-            if (count == 7) {name = response;}
         		//The line below states that if the app is on the last question of participant setup, it should schedule all the notifications
         		//then display the default end of survey message, and then record which notifications have been scheduled.
         		//You will test local notifications in Stage 4 of customizing the app
         		// ********IF YOU HAVE NO QUESTION LOGIC BUT HAVE SCHEDULED NOTIFICATIONS, YOU NEED TO UNCOMMENT THE FOLLOWING LINE
         		// TO EXECUTE THE scheduleNotifs() FUNCTION********	
             if (count == -1){app.scheduleNotifs();app.renderLastPage(lastPage[0], count);}
-            //Identify the next question to populate the view
+                //Identify the next question to populate the view
         		//the next statement is about the snooze function
         		//This statement says that if the participant says they are currently unable to complete the questionnaire now,
         		//the app will display the snooze end of survey message. You can customize the snooze function in Stage 4 of Customization 
             else if (count == SNOOZEQ && response == 0) {app.renderLastPage(lastPage[1], count);}
-        		//The statement below tells the survey under what conditions should participants be shown one branch of the questionnaire as opposed to the other
-        		//Remember each question logic requires at least two lines of code
-        		//Replace X with the question number where the questionnaire splits into two branches
-        		//Replace Y with the response associated with the presence of the phenomenon and A with the number of the question participants should be presented with
-        		//Replace Z with the response associated with the absence of the phenomenon and B with the number of the question participants should be presented with
-        		//The code that preceded the app.renderQuestion function is just telling ExperienceSampler that the previous question should fade out
-        		//You can choose not implement this feature; however, we have made the question fade in feature a default function of ExperienceSampler (another shout-out to 
-        		//to Rebecca Grunberg for the great idea), and it looks more aesthetically pleasing if the fade in is accompanied by a fade out
                 
-            //Q2: Are you a college student? (skip logic)
-                //A1: No
-                else if (count == 2 && response == 0) {$("#question").fadeOut(400, function () {$("#question").html("");app.renderQuestion(4);});}
-                //A2: Yes
-                else if (count == 2 && response == 1) {$("#question").fadeOut(400, function () {$("#question").html("");app.renderQuestion(3);});}
-            //Q3: What year are you?
-                else if (count == 3 && response <= 4) {$("#question").fadeOut(400, function () {$("#question").html("");app.renderQuestion(4);});}
-            //Q4: Have you used social media within the last day? (question branching)
-                //A1: No
-                else if (count == 4 && response == 0) {$("#question").fadeOut(400, function () {$("#question").html("");app.renderQuestion(6);});}
-                //A2: Yes    
-                else if (count == 4 && response == 1) {$("#question").fadeOut(400, function () {$("#question").html("");app.renderQuestion(5);});}
-            //Q5: What social media have you recently used?
-                else if (count == 5 && response <= 4) {$("#question").fadeOut(400, function () {$("#question").html("");app.renderQuestion(7);});}
-            //Q6: When was the last time you used social media?
-                else if (count == 6 && response <= 4) {$("#question").fadeOut(400, function () {$("#question").html("");app.renderQuestion(7);});}
-            //Q7: Which social media do you use most often? (piped text question)
-                else if (count == 7) {$("#question").fadeOut(400, function () {$("#question").html("");app.renderQuestion(8);});}
-            //Q8: How do you feel about <piped text>
-                else if (count == 8) {$("#question").fadeOut(400, function () {$("#question").html("");app.renderQuestion(9);});}
-            //Q9: Which social media do you think is most popular (piped text answer)
-                else if (count == 9) {$("#question").fadeOut(400, function () {$("#question").html("");app.renderLastPage(lastPage[0], count);});}
-                  
-                //The next two statements illustrate the structure that all other question logic statements will follow
-        		//They are similar to the ones regarding the absence and presence of the phenomenon, except this time the critical condition is the response chosen
-        		//The first statement says if the question number is X and the response is less than Y, display question number Z
-        		//In that statement, replace X with the question number where the question logic occurs, Y with the specific response value that will trigger the question logic, 
-        		//and Z with the question number that should be displayed if response Y is chosen
-        		//The second statement, says if the question number is X and the response is not equal to Y, display question number A
-        		//Remember that to do question logic for one question, you need to have AT LEAST two conditional statements about what to do if the trigger response is chosen, AND
-                //what to do if the trigger response is NOT chosen. 
-            
-            // else if (count == 2 && response == 0) {$("#question").fadeOut(400, function () {$("#question").html("");app.renderLastPage(lastPage[0], count);});}
-            // else if (count == 2 && response !== 0) {$("#question").fadeOut(400, function () {$("#question").html("");app.renderQuestion(3);});}
-
-
+            //Q2: Did you receive the first or second notification? (question branching)
+                //A1: First
+                else if (count == 2 && response == 0) {$("#question").fadeOut(400, function () {$("#question").html("");app.renderQuestion(3);});}
+                //A2: Second    
+                else if (count == 2 && response == 1) {$("#question").fadeOut(400, function () {$("#question").html("");app.renderQuestion(4);});}
+            //Q3: Instructions
+                else if (count == 3) {$("#question").fadeOut(400, function () {$("#question").html("");app.renderLastPage(lastPage[0], count);});}
         // 		//Uncomment the "/*else*/" below only when customizing question logic (Stage 3), so that the app will just proceed to the next question in the JSON database
         // 		//DO NOT uncomment the "/*else*/" below when testing whether questions are being displayed in the right format (Stage 1) OR if you have no question logic 
         //in your questionnaire
@@ -666,7 +487,6 @@ should be displayed using which formats before customizing this function*/
     pauseEvents: function() {
         localStore.pause_time = new Date().getTime();
         localStore.uniqueKey = uniqueKey;	
-        app.saveData();
     },
 
     sampleParticipant: function() {
@@ -686,115 +506,7 @@ should be displayed using which formats before customizing this function*/
         else {
             uniqueKey = localStore.uniqueKey;
         }
-        app.saveData();
     },
-
-    //uncomment this function to test data saving function (Stage 2 of Customization)
-    saveDataLastPage:function() {
-        const storage = JSON.stringify(localStore);
-        const storage_save = JSON.parse(storage);
-            $.ajax({
-                   type: 'post',
-                   url: 'https://script.google.com/macros/s/AKfycbyQPSuLQdl56cFk0CxANZx9uEFCLIUjUyRTv12IadgJppKTuNA/exec',
-                   data: JSON.stringify({localStore: localStore}),
-                   crossDomain: true,
-                   processData: false,
-                   success: function (result) {
-                   var pid = localStore.participant_id, snoozed = localStore.snoozed, uniqueKey = localStore.uniqueKey, pause_time=localStore.pause_time;
-                   localStore.clear();
-                   id = pid;
-                   localStore.participant_id = pid;
-                   localStore.snoozed = snoozed;
-        		   localStore.uniqueKey = uniqueKey;
-                   localStore.pause_time=pause_time;
-                   $("#question").html("<h3>Your responses have been recorded. Thank you for completing this survey.</h3>");
-                   },
-
-                   error: function (request, error) {
-        				console.log(error);
-                        $("#question").html("<h3>Please try resending data. If problems persist, please contact the researchers (uoft.dailylifestudy@gmail.com).</h3><br><button>Resend data</button>");
-                        $("#question button").click(function () {app.saveDataLastPage();});    
-        				}
-                   });
-    },
-
-    //uncomment this function to test data saving function (Stage 2 of Customization)
-    saveData:function() {
-            $.ajax({
-                   type: 'post',
-                   url: 'https://script.google.com/macros/s/AKfycbxip3-8Cvpa63Y9HU4FOAfdE1Op2nKkWXgsE958lslUJ1Jio2M/exec',
-                   data: localStore,
-                   processData: false,
-                   crossDomain: true,
-                   success: function (result) {
-                   var pid = localStore.participant_id, snoozed = localStore.snoozed, uniqueKey = localStore.uniqueKey;
-                   localStore.participant_id = pid;
-                   localStore.snoozed = snoozed;
-        			  localStore.uniqueKey = uniqueKey;
-                   },
-                   error: function (request, error) {console.log(error);}
-                   });
-    },
-
-    // Local Notifications Javascript
-    // Stage 5 of Customization
-    //This code is for a interval-contingent design where all participants answer the questionnaire at the same time
-    //(i.e., not customized to their schedule)
-//     scheduleNotifs:function(){
-//         	//Section 1 - Declaring necessary variables
-//         	//need an interval variable, 
-//         	var interval;
-//         	//a variable for the notification id
-//         	var a;
-//          //one to represent each of new dates to be calculated for each signal
-//         	var date1;
-//         	//Then you need a variable to represent the amount of time from now until the first signal
-//         	var nextDiaryLag;
-//         	//Then you can declare any values that you might use more than once such as the number of milliseconds in a day
-//         	var day = 86400000; 
-//         	//You'll also need to get time the app is being installed
-//             var now = new Date().getTime();
-           
-//         	//Now you can use the date object approach to set the time of the first signal
-//         	//in this example, we will set it to 8PM
-//         	var startDate = new Date();
-//             var startDay = startDate.getDate();
-//             var startTime = startDate.setDate((startDay), 18,30,0,0);
-
-//         	//Now calculate the amount of time between installation time and the first signal
-//             nextDiaryLag = parseInt(startTime) - parseInt(now);
-
-//         	//Section 2 to 5 go inside the for loop
-//         	// Set X to the length of your experience sampling period (i.e., how many days you will 
-//             // be collecting data from your participants)
-//             //X has been set to 3 days, so three notifications will be set up
-//         for (i = 0; i < 3; i++){
-
-//         	//Section 2 - Calculate time intervals
-//         	//For this design you just calculate how many milliseconds until the first signal and then add multiples of the 
-//         	//number of milliseconds in day to this so that it fires everyday of your experience sampling data collection period
-//             //Previous example: interval = nextDiaryLag + day*i;
-//             //Note: the interval is set to 1 minute + Xday
-//             interval = 60000 + day*i;
-
-//         	//now convert this interval into a new date object that the plugin can use to schedule your notification
-//             //Note: a new notification should be set for the next three days at one minute past the current time
-//             date1 = new Date(now + interval);
-
-//         	//Section 3 - Creating Unique Ids - create a unique notification id so notifications don't overwrite each other
-//         	//set it to the counter value to ensure it is unique
-//         	a = i;
-
-//         	//Section 4 - Scheduling the notification
-//         	//Now put all these properties into the scheduling function of the plugin
-//         	cordova.plugins.notification.local.schedule({icon: 'ic_launcher', id: a, at: date1, text: 'Time for your next Diary Survey!', title: 'Diary Survey'});
-            
-//         	//Section 5 - Recording notifications
-//         	//Now you want to record your notifications to make sure that they have been scheduled
-//         	//You can also calculate response latencies if you with these values later if you want
-//         	localStore['notification_' + a] = localStore.participant_id + "_" + a + "_" + date1; 
-//         }
-//    },
 
 //    This code is for signal-contingent designs with varying time intervals between notifications
     scheduleNotifs:function() {
