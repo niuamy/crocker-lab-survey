@@ -516,11 +516,11 @@ should be displayed using which formats before customizing this function*/
 
     		//Declares a variable to represent the id of each notification for the day
     		//Declare as many letters as you have intervals (i.e., 6 intervals, declare 6 ids)
-            var a, b, c, d, e, f, g;
+            var a, b, c, d, e, f;
 
     		//Declare a variable to represent new date to be calculated for each beep
     		//That is, if there are 6 intervals, declare 6 new dates
-            var date1, date2, date3, date4, date5, date6, date7;
+            var date1, date2, date3, date4, date5, date6;
 
     		//The statement below declares the start and end time of the daily data collection period
     		//These variables are not necessary if the start and end time of the daily data collection period do not vary across the experience
@@ -546,8 +546,8 @@ should be displayed using which formats before customizing this function*/
 
     		//Then you can declare any values that you might use more than once such as the number of milliseconds in a day
             var day = 86400000;
-            var minDiaryLag = 300000;//5 minutes
-            var randomDiaryLag = 300000;//5 minutes
+            var minDiaryLag = 60000;//1 minute
+            var randomDiaryLag = 60000;//1 minute
             const minute = 60000;
             //var hour = 3600000;
             //var minDiaryLagAfterDinner = 5400000;
@@ -624,7 +624,7 @@ should be displayed using which formats before customizing this function*/
                 d = 104+(parseInt(i)*100);
                 e = 105+(parseInt(i)*100);
                 f = 106+(parseInt(i)*100);
-                g = 107+(parseInt(i)*100);
+                
     			//This part of the code calculates the time when the notification should be sent by adding the time interval to the current date and time        
                 date1 = new Date(now + interval1);
                 date2 = new Date(now + interval2);
@@ -632,8 +632,6 @@ should be displayed using which formats before customizing this function*/
                 date4 = new Date(now + interval4);
                 date5 = new Date(now + interval5);
                 date6 = new Date(now + interval6);
-                //Second notif after date1
-                date7 = new Date(now + interval1 + minute);
             
                 console.log("date1: " + date1);
                 console.log("date2: " + date2);
@@ -641,7 +639,6 @@ should be displayed using which formats before customizing this function*/
                 console.log("date4: " + date4);
                 console.log("date5: " + date5);
                 console.log("date6: " + date6);
-                console.log("date7: " + date7);
             
     			//This part of the code schedules the notifications
             	cordova.plugins.notification.local.schedule([
@@ -650,8 +647,7 @@ should be displayed using which formats before customizing this function*/
             		{icon: 'ic_launcher', id: c, title: 'Diary Surveys', text: 'Time for your next Diary Survey!', at: date3,},
             		{icon: 'ic_launcher', id: d, title: 'Diary Surveys', text: 'Time for your next Diary Survey!', at: date4,},
             		{icon: 'ic_launcher', id: e, title: 'Diary Surveys', text: 'Time for your next Diary Survey!', at: date5,},
-                    {icon: 'ic_launcher', id: f, title: 'Diary Surveys', text: 'Time for your next Diary Survey!', at: date6,},
-                    {icon: 'ic_launcher', id: g, title: 'Diary Surveys', text: 'Second', at: date7,}]);
+                    {icon: 'ic_launcher', id: f, title: 'Diary Surveys', text: 'Time for your next Diary Survey!', at: date6,}]);
             		
     			//This part of the code records when the notifications are scheduled for and sends it to the server
             	localStore['notification_' + i + '_1'] = localStore.participant_id + "_" + a + "_" + date1;
@@ -660,7 +656,6 @@ should be displayed using which formats before customizing this function*/
             	localStore['notification_' + i + '_4'] = localStore.participant_id + "_" + d + "_" + date4;
             	localStore['notification_' + i + '_5'] = localStore.participant_id + "_" + e + "_" + date5;
                 localStore['notification_' + i + '_6'] = localStore.participant_id + "_" + f + "_" + date6;
-                localStore['notification_' + i + '_7'] = localStore.participant_id + "_" + g + "_" + date7;
         }
     },
 
@@ -669,15 +664,15 @@ should be displayed using which formats before customizing this function*/
     //Replace X with the number of seconds you want the app to snooze for (e.g., 10 minutes is 600 seconds)
     //You can also customize the Title of the message, the snooze message that appears in the notification
     snoozeNotif:function() {
-            var now = new Date().getTime(), snoozeDate = new Date(now + 60*1000);
-            var id = '99';
-            cordova.plugins.notification.local.schedule({
-                                                 icon: 'ic_launcher',
-                                                 id: id,
-                                                 title: 'Title of message',
-                                                 text: 'Snooze message',
-                                                 at: snoozeDate,
-                                                 });
+        var now = new Date().getTime(), snoozeDate = new Date(now + 60*1000);
+        var id = '99';
+        cordova.plugins.notification.local.schedule({
+                                             icon: 'ic_launcher',
+                                             id: id,
+                                             title: 'Title of message',
+                                             text: 'Snooze message',
+                                             at: snoozeDate,
+                                             });
     },
     //This function forces participants to respond to an open-ended question if they have left it blank
     validateResponse: function(data){
